@@ -1,0 +1,88 @@
+<!-- vim: ft=xml sw=2 ts=2 expandtab smartindent nrformats= : 
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>animations</key>
+	<dict>
+    <key>huayao_idle</key>
+    <dict>
+      <key>delay</key>
+      <real>0.125</real>
+      <key>frames</key>
+      <array>
+        <string>huayao_idle_1</string>
+        <string>huayao_idle_2</string>
+        <string>huayao_idle_3</string>
+        <string>huayao_idle_4</string>
+        <string>huayao_idle_5</string>
+        <string>huayao_idle_6</string>
+        <string>huayao_idle_7</string>
+        <string>huayao_idle_8</string>
+      </array>
+    </dict>
+    <!-- end huayao_idle -->
+    <key>huayao_run</key>
+    <dict>
+      <key>delay</key>
+      <real>0.125</real>
+      <key>frames</key>
+      <array>
+        <string>huayao_run_1</string>
+        <string>huayao_run_2</string>
+        <string>huayao_run_3</string>
+        <string>huayao_run_4</string>
+        <string>huayao_run_5</string>
+        <string>huayao_run_6</string>
+        <string>huayao_run_7</string>
+        <string>huayao_run_8</string>
+      </array>
+    </dict>
+    <!-- end huayao_run -->
+    <key>huayao_att</key>
+    <dict>
+      <key>delay</key>
+      <real>0.125</real>
+      <key>frames</key>
+      <array>
+        <string>huayao_att_1</string>
+        <string>huayao_att_2</string>
+        <string>huayao_att_3</string>
+        <string>huayao_att_4</string>
+        <string>huayao_att_5</string>
+        <string>huayao_att_6</string>
+        <string>huayao_att_7</string>
+        <string>huayao_att_8</string>
+      </array>
+    </dict>
+    <!-- end huayao_att -->
+    <key>huayao_hit</key>
+    <dict>
+      <key>delay</key>
+      <real>0.125</real>
+      <key>frames</key>
+      <array>
+        <string>huayao_hit_1</string>
+        <string>huayao_hit_2</string>
+        <string>huayao_hit_3</string>
+        <string>huayao_hit_4</string>
+      </array>
+    </dict>
+    <!-- end huayao_hit -->
+    <key>huayao_dead</key>
+    <dict>
+      <key>delay</key>
+      <real>0.125</real>
+      <key>frames</key>
+      <array>
+        <string>huayao_dead_1</string>
+        <string>huayao_dead_2</string>
+        <string>huayao_dead_3</string>
+        <string>huayao_dead_4</string>
+      </array>
+    </dict>
+    <!-- end huayao_dead -->
+  </dict>
+</dict>
+</plist>
