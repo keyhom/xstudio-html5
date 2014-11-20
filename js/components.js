@@ -3,7 +3,7 @@ var plexus = plexus || {};
 (function(plx) {
     console.log("components.js [loaded].");
 
-    plexus.each = function (obj, iterator, context) {
+    plx.each = function (obj, iterator, context) {
         if (!obj)
             return;
         if (obj instanceof Array) {
