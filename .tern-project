@@ -5,7 +5,9 @@
     ],
     "loadEagerly": [
         "js/vendor/cocos2d-js-v3.1-lite.js",
-        "js/vendor/modernizr-2.6.2.min.js"
+        "js/vendor/modernizr-2.6.2.min.js",
+        "js/plexus.js",
+        "js/component.js"
     ],
     "plugins": {
         "requirejs": {

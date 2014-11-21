@@ -105,9 +105,9 @@
     };
 
     // Make the canvas fit the browser window's size.
-    $('#gameCanvas')
-        .attr('width', $(document.body).width())
-        .attr('height', $(document).height()).show();
+    // $('#gameCanvas')
+        // .attr('width', $(document.body).width())
+        // .attr('height', $(document).height()).show();
 
     // Run game.
     cc.game.run("gameCanvas");
