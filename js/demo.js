@@ -100,6 +100,8 @@
             // cc.director._openGLView.setDesignResolutionSize(720, 480, 2);
             cc.director.setDisplayStats(true);
             cc.director.runScene(GameScene.createScene());
+            cc.director.getScheduler().scheduleUpdateForTarget(plexus.GameSystem.getInstance(), cc.Scheduler.PRIORITY_SYSTEM, false);
+            // cc.director.scheduleUpdateForTarget(plexus.GameSystem.getInstance(), 0, false);
 
         }, this);
     };

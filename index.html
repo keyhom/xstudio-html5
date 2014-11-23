@@ -7,24 +7,39 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
         <title>XStudio-Lite v1.0</title>
+        <meta name="google" value="notranslate">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+        <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"> -->
+        <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"> -->
+        <link rel="stylesheet" href="css/bootstrap3/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap3/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <style text="text/css">
             html, body {
-                margin: 0;
-                padding: 0;
-                background-color: #000;
+                background-color: #222;
             }
 
-            * {
-                font-family: Arial, Tahoma;
-                font-size: 12px;
+            body {
+              margin-top: 80px;
+            }
+
+            body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+              font-family: Microsoft YaHei, Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+              /* text-shadow: 0 1px 0 #fff; */
+            }
+            .form-control {
+              font-family: Microsoft YaHei, Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+              /* text-shadow: 0 1px 0 #fff; */
+            }
+
+            hr {
+              border-color: #eee;
             }
 
         </style>
@@ -33,11 +48,97 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container" style="width: 100%">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle"
+                  data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="javascript:void(0);">XStudio Lite</a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li>
+                  <a href="#" class="" data-toggle="dropdown">Start<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">New Project</a></li>
+                    <li><a href="#">New File</a></li>
+                    <li><a href="#">Open Project</a></li>
+                    <li><a href="#">Close Project</a></li>
+                    <li><a href="#">Save Project</a></li>
+                    <li><a href="#">Save All</a></li>
+                    <li><a href="#">Save As</a></li>
+                    <li>
+                      <a class="" href="#" data-toggle="dropdown">Import<span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Project</a></li>
+                        <li><a href="#">Scene</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#">Edit</a>
+                </li>
+                <li>
+                  <a href="#">Window</a>
+                </li>
+                <li>
+                  <a href="#" class="" data-toggle="dropdown">Resolution<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">480 * 320</a></li>
+                    <li><a href="#">320 * 480</a></li>
+                    <li><a href="#">960 * 640</a></li>
+                    <li><a href="#">640 * 960</a></li>
+                    <li><a href="#">1024 * 768</a></li>
+                    <li><a href="#">768 * 1024</a></li>
+                    <li><a href="#">Custom Size(*)</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">View Help</a></li>
+                    <li><a href="#">About XStudio-Lite</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guy<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0)">Profile</a></li>
+                    <li><a href="javascript:void(0)">Settings</a></li>
+                  </ul>
+                </li>
+                <li class="navbar-form">
+                  <button type="submit" class="btn btn-primary" data-toggle="modal"
+                    data-target="#signOutModal">Close</button>
+                </li>
+              </ul>
+            </div> <!-- /.nav-collapse -->
+          </div>
+        </div>
+
+
         <canvas id="gameCanvas" width="720" height="480"></canvas>
+
+        <div style="margin: 0,auto;width: 720;text-align: center;margin-top: 20px;">
+          <button id="btnHeroIdle" class="btn btn-primary">Idle</button>
+          <button id="btnHeroRun"  class="btn btn-default">Run</button>
+          <button id="btnHeroHit"  class="btn btn-default">Hit</button>
+          <button id="btnHeroDead" class="btn btn-default">Dead</button>
+        </div>
 
         <!--页尾-->
         <!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
+        <!-- <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js" charset="UTF-8"><\/script>')</script>
+        <script src="js/bootstrap.min.js"></script>
         <script>window.cc || document.write('<script src="js/vendor/cocos2d-js-v3.1-lite.js" charset="UTF-8"><\/script>')</script>
         <script src="js/plugins.js" charset="UTF-8"></script>
         <script src="js/plexus.js" charset="UTF-8"></script>
@@ -45,5 +146,25 @@
         <script src="js/demo.js" charset="UTF-8"></script>
         <script src="js/main.js" charset="UTF-8"></script>
         <script src="js/components-test.js" charset="UTF-8"></script>
+        <script type="text/javascript">
+          (function() {
+              $('#btnHeroIdle').click(function() {
+                  // noop
+              });
+
+              $('#btnHeroRun').click(function() {
+                  // noop
+                  var gs = plexus.GameSystem.getInstance();
+              });
+
+              $("#btnHeroHit").click(function() {
+                  // noop
+              });
+
+              $("#btnHeroDead").click(function() {
+                  // noop
+              });
+          })();
+        </script>
     </body>
 </html>
