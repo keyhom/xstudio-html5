@@ -89,7 +89,6 @@ window._plexus = plexus;
         Class.prototype = prototype;
         desc.value = Class;
         Object.defineProperty(Class.prototype, 'constructor', desc);
-        // ...
         for(var idx = 0, li = arguments.length; idx < li; ++idx) {
             var prop = arguments[idx];
             for (var name in prop) {
@@ -120,7 +119,6 @@ window._plexus = plexus;
                 // ... Getters and Setters ... ?
             }
         }
-        // ...
         Class.extend = plx.Class.extend;
         Class.implement = function(prop) {
             for (var name in prop) {
@@ -139,11 +137,18 @@ window._plexus = plexus;
      */
     var GameObject = plx.Class.extend({
         _components: {},
+        _data: {},
         ctor: function() {
             this._id = (+new Date()).toString(16) + (Math.random() * 1000000000 | 0).toString(16) + (++GameObject.sNumOfObjects);
         },
         getId: function() {
             return this._id;
+        },
+        getUserData: function() {
+            return this._data;
+        },
+        setUserData: function(data) {
+            plx.extend(this._data, data);
         },
         getComponent: function(component) {
             var name = component;
@@ -298,6 +303,20 @@ window._plexus = plexus;
     // SubSystems
     //------------------------------
 
+    var InputSystem = SubSystem.extend({
+        name: 'input',
+        check: function(obj) {
+            if (typeof obj.getComponent === 'function') {
+                return obj.getComponent(this.name);
+            }
+            return false;
+        },
+        updateObjectDelta: function(obj, dt) {
+            var comp = obj.getComponent(this.name);
+            comp && comp.update(dt);
+        }
+    });
+
     /**
      * @class PhysicsSystem
      */
@@ -305,7 +324,7 @@ window._plexus = plexus;
         name: 'physics',
         check: function(obj) {
             if (typeof obj.getComponent=== 'function') {
-                return obj.getComponent("physics");
+                return obj.getComponent(this.name);
             }
             return false;
         },
@@ -321,12 +340,12 @@ window._plexus = plexus;
         name: 'animator',
         check: function(obj) {
             if (typeof obj.getComponent === 'function') {
-                return obj.getComponent("animator");
+                return obj.getComponent(this.name);
             }
             return false;
         },
         updateObjectDelta: function(obj, dt) {
-            var comp = obj.getComponent('animator');
+            var comp = obj.getComponent(this.name);
             comp && comp.update(dt);
         }
     });
@@ -338,10 +357,12 @@ window._plexus = plexus;
         return _systemInstance;
     };
 
-    System.getInstance().addSubSystem(new PhysicsSystem());
-    System.getInstance().addSubSystem(new AnimatorSystem());
-
     plx.GameSystem = System;
+    plx.GameSubSystem = SubSystem;
+    plx.InputSystem = InputSystem;
+    plx.PhysicsSystem = PhysicsSystem;
+    plx.AnimatorSystem = AnimatorSystem;
+
     plx.GameComponent = GameComponent;
     plx.GameObject = GameObject;
 

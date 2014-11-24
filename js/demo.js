@@ -34,20 +34,20 @@
 
             _bg.runAction(cc.Follow.create(hero, cc.rect(0, 0, _bg.getContentSize().width, _bg.getContentSize().height)));
 
-            var l = cc.EventListener.create({
-                event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                swallowTouches: true,
-                onTouchBegan: function(touch, event) {
-                    // do something.
-                    var loc = touch.getLocation();
-                    loc = _bg.convertToNodeSpace(loc);
-                    hero.runAction(cc.MoveTo.create(1, loc));
+            // var l = cc.EventListener.create({
+                // event: cc.EventListener.TOUCH_ONE_BY_ONE,
+                // swallowTouches: true,
+                // onTouchBegan: function(touch, event) {
+                    // // do something.
+                    // var loc = touch.getLocation();
+                    // loc = _bg.convertToNodeSpace(loc);
+                    // hero.runAction(cc.MoveTo.create(1, loc));
 
-                    return true;
-                }
-            });
+                    // return true;
+                // }
+            // });
 
-            cc.eventManager.addListener(l, this);
+            // cc.eventManager.addListener(l, this);
 
             this._hero = hero;
         },
@@ -59,12 +59,6 @@
                 _objectSprite.setPosition(_bg.getPosition());
             }
         },
-        touchRect: function() {
-            return this.getBoundingBoxToWorld();
-        },
-        onTouchBegan: function(touch, event) {
-            console.log("touched me.");
-        }
     });
 
     GameScene.createScene = function() {

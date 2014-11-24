@@ -61,13 +61,28 @@ plexus.components = plexus.components || {};
     });
 
     var Animator = plexus.GameComponent.extend({
+        _state: "none",
+        _stateChanged: false,
         name: "animator",
         ctor: function() {
             this._super();
         },
+        getState: function() {
+            return this._state;
+        },
+        setState: function(state) {
+            if (this._state == state) return;
+
+            this._state = state;
+            this._stateChanged = true;
+        },
         update: function(dt) {
             // console.log("Animator delta.");
             // console.log("Owner: %s", JSON.stringify(this.getOwner()));
+            if (this._stateChanged) {
+                this._stateChanged = false;
+                console.log("State Changed in Animator.");
+            }
         }
     });
 

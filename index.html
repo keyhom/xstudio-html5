@@ -143,10 +143,25 @@
         <script src="js/plugins.js" charset="UTF-8"></script>
         <script src="js/plexus.js" charset="UTF-8"></script>
         <script src="js/components.js" charset="UTF-8"></script>
+        <script src="js/system/AnimatorSystem.js" charset="UTF-8"></script>
         <script src="js/demo.js" charset="UTF-8"></script>
         <script src="js/main.js" charset="UTF-8"></script>
         <script src="js/components-test.js" charset="UTF-8"></script>
         <script type="text/javascript">
+          (function() {
+              var PlayerInputSystem = PlayerInputSystem || null;
+              if (PlayerInputSystem) {
+                  var inputSystem = new PlayerInputSystem();
+                  plexus.GameSystem.getInstance().addSubSystem(inputSystem);
+              }
+
+              var AnimatorSystem = plexus.CocosAnimatorSystem || null;
+              if (AnimatorSystem) {
+                  var animSys = new AnimatorSystem();
+                  plexus.GameSystem.getInstance().addSubSystem(animSys);
+              }
+          }());
+
           (function() {
               var testObject = new plexus.GameObject();
               testObject.addComponent(new plexus.components.Input());
@@ -154,26 +169,35 @@
               testObject.addComponent(new plexus.components.Animator());
 
               plexus.GameSystem.getInstance().addObject(testObject);
+              console.log(testObject.getId());
 
               $('#btnHeroIdle').click(function() {
                   // noop
                   console.log("Idle");
+                  var comp = testObject.getComponent('animator');
+                  comp && comp.setState('idle');
               });
 
               $('#btnHeroRun').click(function() {
                   // noop
                   var gs = plexus.GameSystem.getInstance();
                   console.log("Run");
+                  var comp = testObject.getComponent('animator');
+                  comp && comp.setState('run');
               });
 
               $("#btnHeroHit").click(function() {
                   // noop
                   console.log("Hit");
+                  var comp = testObject.getComponent('animator');
+                  comp && comp.setState('hit');
               });
 
               $("#btnHeroDead").click(function() {
                   // noop
                   console.log("Dead");
+                  var comp = testObject.getComponent('animator');
+                  comp && comp.setState('dead');
               });
 
           }())
