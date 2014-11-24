@@ -10,7 +10,7 @@ plexus.components = plexus.components || {};
     /**
      * @class Transform
      */
-    var TransformComponent = plexus.class(plexus.GameComponent, {
+    var TransformComponent = plexus.GameComponent.extend({
         name: "transform",
         ctor: function() {
             this._super();
@@ -40,7 +40,7 @@ plexus.components = plexus.components || {};
     /**
      * @class InputComponet
      */
-    var InputComponent = plexus.class(plexus.GameComponent, {
+    var InputComponent = plexus.GameComponent.extend({
         name: "input",
         ctor: function() {
             this._super();
@@ -50,7 +50,7 @@ plexus.components = plexus.components || {};
     /**
      * @class PhysicsComponent
      */
-    var PhysicsComponent = plexus.class(plexus.GameComponent, {
+    var PhysicsComponent = plexus.GameComponent.extend({
         name: "physics",
         ctor: function() {
             this._super();
@@ -60,13 +60,14 @@ plexus.components = plexus.components || {};
         }
     });
 
-    var Animator = plexus.class(plexus.GameComponent, {
+    var Animator = plexus.GameComponent.extend({
         name: "animator",
         ctor: function() {
             this._super();
         },
         update: function(dt) {
-            console.log("Animator delta.");
+            // console.log("Animator delta.");
+            // console.log("Owner: %s", JSON.stringify(this.getOwner()));
         }
     });
 

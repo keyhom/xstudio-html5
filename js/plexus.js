@@ -69,6 +69,8 @@ window._plexus = plexus;
     plx.Class = function() {
     };
 
+    var FuncRegexTest = /\b_super\b/;
+    var releaseMode = false;
     plx.Class.extend = function(props) {
         var _super = this.prototype;
         var prototype = Object.create(_super);
@@ -88,6 +90,36 @@ window._plexus = plexus;
         desc.value = Class;
         Object.defineProperty(Class.prototype, 'constructor', desc);
         // ...
+        for(var idx = 0, li = arguments.length; idx < li; ++idx) {
+            var prop = arguments[idx];
+            for (var name in prop) {
+                var isFunc = (typeof prop[name] === 'function');
+                var override = (typeof _super[name] === 'function');
+                var hasSuperCall = FuncRegexTest.test(prop[name]);
+                if (releaseMode && isFunc && override && hasSuperCall) {
+                    desc.value = ClassLoader.compileSuper(prop[name], name, classId);
+                    Object.defineProperty(prototype, name, desc);
+                } else if(isFunc && override && hasSuperCall) {
+                    desc.value = (function(name, fn) {
+                        return function() {
+                            var tmp = this._super;
+                            this._super = _super[name];
+                            var ret = fn.apply(this, arguments);
+                            this._super = tmp;
+                            return ret;
+                        };
+                    })(name, prop[name]);
+                    Object.defineProperty(prototype, name, desc);
+                } else if (isFunc) {
+                    desc.value = prop[name];
+                    Object.defineProperty(prototype, name, desc);
+                } else {
+                    prototype[name] = prop[name];
+                }
+
+                // ... Getters and Setters ... ?
+            }
+        }
         // ...
         Class.extend = plx.Class.extend;
         Class.implement = function(prop) {
@@ -98,40 +130,16 @@ window._plexus = plexus;
         return Class;
     };
 
-    /**
-     * Defined and return a class
-     */
-    plx.class = function(superType, declares) {
-        if (typeof superType !== 'function') {
-            return undefined;
-        }
-
-        var Class = function() {
-            this._super = superType.prototype.ctor || function() {};
-            if (typeof this.ctor === 'function') {
-                if (arguments.length > 0) {
-                    this.ctor.apply(this, arguments);
-                } else {
-                    this.ctor();
-                }
-            }
-            this._super = undefined;
-
-            return this;
-        };
-
-        plx.extend(Class.prototype, superType.prototype, declares);
-        return Class;
-    };
-
     //------------------------------
     // Plexus GameObject
     //------------------------------
 
+    /**
+     * @class GameObject
+     */
     var GameObject = plx.Class.extend({
         _components: {},
         ctor: function() {
-            this._super();
             this._id = (+new Date()).toString(16) + (Math.random() * 1000000000 | 0).toString(16) + (++GameObject.sNumOfObjects);
         },
         getId: function() {
@@ -178,6 +186,9 @@ window._plexus = plexus;
     // Plexus Component
     //------------------------------
 
+    /**
+     * @class GameComponent
+     */
     var GameComponent = plx.Class.extend({
         ctor: function() {
             this._owner = null;
@@ -194,18 +205,67 @@ window._plexus = plexus;
     // Plexus System
     //------------------------------
 
-    function _addSubSystem(sub) {
-        _managedSystems.push(sub);
-    }
+    /**
+     * @class System
+     */
+    var System = plexus.Class.extend({
+        _managedObjects: [],
+        _managedSystems: [],
+        ctor: function() {
 
-    function _removeSubSystem(sub) {
-        var index = _managedSystems.indexOf(sub);
-        if (index != -1) {
-            _managedSystems.splice(index, 1);
+        },
+        addSubSystem: function(sub) {
+            if (sub && sub.name) {
+                this._managedSystems[sub.name] = sub;
+                this._managedSystems.push(sub);
+            }
+        },
+        removeSubSystem: function(sub) {
+            var name = sub;
+            if (typeof sub === 'function') {
+                name = sub.prototype.name;
+            }
+            var origin = this._managedSystems[name];
+            delete this._managedSystems[name];
+            var idx = this._managedSystems.indexOf(origin);
+            if (idx != -1) {
+                this._managedSystems.splice(idx, 1);
+            }
+            return origin;
+        },
+        addObject: function(obj) {
+            this._managedObjects.push(obj);
+
+            // added in subsystems.
+            this._managedSystems.forEach(function(elt, i) {
+                elt.order(obj);
+                return true;
+            });
+        },
+        removeObject: function(obj) {
+            var index = this._managedObjects.indexOf(obj);
+            if (index != -1) {
+                this._managedObjects.splice(index, 1);
+
+                // remove in subsystems.
+                this._managedSystems.every(function(elt, i) {
+                    elt.unorder(elt);
+                    return true;
+                });
+            }
+        },
+        update: function(dt) {
+            this._managedSystems.forEach(function(elt, i) {
+                elt.update(dt);
+                return true;
+            });
         }
-    }
+    });
 
-    var SubSystem = plexus.class(function() {}, {
+    /**
+     * @class SubSystem
+     */
+    var SubSystem = plexus.Class.extend({
         _managed: [],
         check: function(obj) {
             return true;
@@ -234,46 +294,18 @@ window._plexus = plexus;
         }
     });
 
-    var _managedObjects = [];
-    var _managedSystems = [];
-    var System = plexus.class(function() {}, {
-        ctor: function() {
-            this._super();
-        },
-        addObject: function(obj) {
-            _managedObjects.push(obj);
+    //------------------------------
+    // SubSystems
+    //------------------------------
 
-            // added in subsystems.
-            _managedSystems.every(function(elt, i) {
-                elt.order(obj);
-                return true;
-            });
-        },
-        removeObject: function(obj) {
-            var index = _managedObjects.indexOf(obj);
-            if (index != -1) {
-                _managedObjects.splice(index, 1);
-
-                // remove in subsystems.
-                _managedSystems.every(function(elt, i) {
-                    elt.unorder(elt);
-                    return true;
-                });
-            }
-        },
-        update: function(dt) {
-            _managedSystems.forEach(function(elt, i) {
-                elt.update(dt);
-                return true;
-            });
-        }
-    });
-
-    // subsystems.
-    var PhysicsSystem = plx.extend(SubSystem, {
+    /**
+     * @class PhysicsSystem
+     */
+    var PhysicsSystem = SubSystem.extend({
+        name: 'physics',
         check: function(obj) {
-            if (typeof obj.getComponet === 'function') {
-                return obj.getComponet("physics");
+            if (typeof obj.getComponent=== 'function') {
+                return obj.getComponent("physics");
             }
             return false;
         },
@@ -282,31 +314,32 @@ window._plexus = plexus;
         }
     });
 
-    var AnimatorSystem = plx.extend(SubSystem, {
+    /**
+     * @class AnimatorSystem
+     */
+    var AnimatorSystem = SubSystem.extend({
+        name: 'animator',
         check: function(obj) {
-            if (typeof obj.getComponet === 'function') {
-                return obj.getComponet("animator");
+            if (typeof obj.getComponent === 'function') {
+                return obj.getComponent("animator");
             }
             return false;
         },
         updateObjectDelta: function(obj, dt) {
-            var comp = obj.getCompoennt('animator');
-            console.log("The comp is null? %s", comp ? "true" : "false");
-            if (comp) {
-                console.log("updateObjectDelta: %s", comp);
-            }
+            var comp = obj.getComponent('animator');
+            comp && comp.update(dt);
         }
     });
 
     var _systemInstance = undefined;
-    System.getInstance = function() {
+    System.getInstance = function getSystem() {
         if (!_systemInstance)
             _systemInstance = new System;
         return _systemInstance;
     };
 
-    _managedSystems.push(new PhysicsSystem());
-    _managedSystems.push(new AnimatorSystem());
+    System.getInstance().addSubSystem(new PhysicsSystem());
+    System.getInstance().addSubSystem(new AnimatorSystem());
 
     plx.GameSystem = System;
     plx.GameComponent = GameComponent;

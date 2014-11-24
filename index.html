@@ -149,12 +149,9 @@
         <script type="text/javascript">
           (function() {
               var testObject = new plexus.GameObject();
-              console.log(plexus.GameObject.prototype);
-              // testObject.addComponent(new plexus.components.Input());
-              // testObject.addComponent(new plexus.components.Physics());
-              // testObject.addComponent(new plexus.components.Animator());
-
-              console.log("TestObject: %s", JSON.stringify(testObject, null, 4));
+              testObject.addComponent(new plexus.components.Input());
+              testObject.addComponent(new plexus.components.Physics());
+              testObject.addComponent(new plexus.components.Animator());
 
               plexus.GameSystem.getInstance().addObject(testObject);
 
