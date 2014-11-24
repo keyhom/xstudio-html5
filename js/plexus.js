@@ -35,7 +35,68 @@ window._plexus = plexus;
         return target;
     };
 
-    plx._classes = {};
+
+    var ClassLoader = {
+        id: (0 | (Math.random() * 998)),
+        instanceId: (0 | (Math.random() * 998)),
+        compileSuper: function(func, name, id) {
+            var str = func.toString();
+            var pstart = str.indexOf('('), pend = str.indexOf(')');
+            var params = str.substring(pstart + 1, pend);
+            params = params.trim();
+            var bstart = str.indexOf('{'), bend = str.lastIndexOf('}');
+            var str = str.substring(bstart + 1, bend);
+            while (str.indexOf('this._super') != -1) {
+                var sp = str.indexOf('this._super');
+                var bp = str.indexOf('(', sp);
+                var bbp = str.indexOf(')', bp);
+                var superParams = str.substring(bp + 1, bbp);
+                superParams = superParams.trim();
+                var coma = superParams ? ',' : '';
+                str = str.substring(0, sp) + 'ClassLoader[' + id + '].' + name + '.call(this' + coma + str.substring(bp + 1);
+            }
+            return Function(params, str);
+        },
+        newId: function() {
+            return this.id++;
+        },
+        newInstanceId: function() {
+            return this.instanceId++;
+        }
+    };
+    ClassLoader.compileSuper.ClassLoader = ClassLoader;
+
+    plx.Class = function() {
+    };
+
+    plx.Class.extend = function(props) {
+        var _super = this.prototype;
+        var prototype = Object.create(_super);
+        var classId = ClassLoader.newId();
+        ClassLoader[classId] = _super;
+        var desc = { writable: true, enumerable: false, configurable: true };
+        prototype.__instanceId = null;
+        function Class() {
+            this.__instanceId = ClassLoader.newInstanceId();
+            if (this.ctor)
+                this.ctor.apply(this, arguments);
+        };
+        Class.id = classId;
+        desc.value = classId;
+        Object.defineProperty(prototype, "__pid", desc);
+        Class.prototype = prototype;
+        desc.value = Class;
+        Object.defineProperty(Class.prototype, 'constructor', desc);
+        // ...
+        // ...
+        Class.extend = plx.Class.extend;
+        Class.implement = function(prop) {
+            for (var name in prop) {
+                prototype[name] = prop[name];
+            }
+        };
+        return Class;
+    };
 
     /**
      * Defined and return a class
@@ -67,80 +128,67 @@ window._plexus = plexus;
     // Plexus GameObject
     //------------------------------
 
-    // @class plexus.GameObject
-    plx.GameObject = function Entity() {
-        var self = this;
-        var _super = plx.GameObject.prototype;
-
-        // Generate a pseudo random ID.
-        this.id = (+new Date()).toString(16) + (Math.random() * 1000000000 | 0).toString(16)
-            + _super.sNumOfObjects;
-
-        ++_super.sNumOfObjects;
-
-        // The component data will live in this object.
-        this.mComponents = {};
-
-        // Private member.
-        var private = {
-            mTag: "Untagged",
-            mLayer: "Default"
-        };
-
-        plx.extend(this, {
-            getTag: function() {
-                return private.mTag;
-            },
-            setTag: function(tagValue) {
-                private.mTag = tagValue;
+    var GameObject = plx.Class.extend({
+        _components: {},
+        ctor: function() {
+            this._super();
+            this._id = (+new Date()).toString(16) + (Math.random() * 1000000000 | 0).toString(16) + (++GameObject.sNumOfObjects);
+        },
+        getId: function() {
+            return this._id;
+        },
+        getComponent: function(component) {
+            var name = component;
+            if (typeof component === 'function') {
+                name = component.prototype.name;
             }
-        });
 
-        return this;
-    };
+            return this._components[name];
+        },
+        addComponent: function(component) {
+            if (!component || !component.name)
+                return;
 
-    // Keep track of GameObjects created.
-    plx.GameObject.prototype.sNumOfObjects = 0;
-
-    // Add component data to the GameObject.
-    plx.GameObject.prototype.addComponent = function(component) {
-        if (!component || !component.name)
-            return;
-
-        this.mComponents[component.name] = component;
-        return this;
-    };
-
-    // Remove component data by removing the reference to it.
-    plx.GameObject.prototype.removeComponent = function(component) {
-        // Allows either a component function or a string of a component name to be passed in.
-        var name = component;
-        if (typeof component === 'function') {
-            name = component.prototype.name;
-        }
-
+            this._components[component.name] = component;
+            return this;
+        },
         // Remove component data by removing the reference to it.
-        delete this.mComponents[name];
-        return this;
-    };
+        removeComponent: function(component) {
+            // Allows either a component function or a string of a component name to be passed in.
+            var name = component;
+            if (typeof component === 'function') {
+                name = component.prototype.name;
+            }
+
+            // Remove component data by removing the reference to it.
+            delete this._components[name];
+            return this;
+        },
+        getTag: function() {
+            return this._tag;
+        },
+        setTag: function(tagValue) {
+            this._tag = tagValue;
+        }
+    });
+
+    GameObject.sNumOfObjects = 0;
 
     //------------------------------
     // Plexus Component
     //------------------------------
 
-    plx.GameComponent = function() {
-        var self = this;
-        self._owner = null; // References owner to null.
-        return self;
-    };
-
-    plx.GameComponent.prototype.getOwner = function() {
-        return this._owner;
-    };
-
-    plx.GameComponent.prototype.setOwner = function(owner) {
-        this._owner = owner;
-    };
+    var GameComponent = plx.Class.extend({
+        ctor: function() {
+            this._owner = null;
+        },
+        getOwner: function() {
+            return this._owner;
+        },
+        setOwner: function(owner) {
+            this._owner = owner;
+        }
+    });
 
     //------------------------------
     // Plexus System
@@ -177,13 +225,12 @@ window._plexus = plexus;
         },
         update: function(dt) {
             var self = this;
-            this._managed.forEach(function(elt, i) {
-                self.updateObjectDelta(elt, dt);
+            // console.log(JSON.stringify(self._managed, null, 4));
+            this._managed.every(function(elt, i) {
+                if (typeof self.updateObjectDelta === 'function')
+                    self.updateObjectDelta(elt, dt);
                 return true;
-            });
-        },
-        updateObjectDelta: function(obj, delta) {
-
+            }, self);
         }
     });
 
@@ -191,7 +238,7 @@ window._plexus = plexus;
     var _managedSystems = [];
     var System = plexus.class(function() {}, {
         ctor: function() {
-
+            this._super();
         },
         addObject: function(obj) {
             _managedObjects.push(obj);
@@ -244,6 +291,7 @@ window._plexus = plexus;
         },
         updateObjectDelta: function(obj, dt) {
             var comp = obj.getCompoennt('animator');
+            console.log("The comp is null? %s", comp ? "true" : "false");
             if (comp) {
                 console.log("updateObjectDelta: %s", comp);
             }
@@ -259,7 +307,10 @@ window._plexus = plexus;
 
     _managedSystems.push(new PhysicsSystem());
     _managedSystems.push(new AnimatorSystem());
+
     plx.GameSystem = System;
+    plx.GameComponent = GameComponent;
+    plx.GameObject = GameObject;
 
 })(plexus);
 

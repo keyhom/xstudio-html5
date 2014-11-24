@@ -60,9 +60,20 @@ plexus.components = plexus.components || {};
         }
     });
 
+    var Animator = plexus.class(plexus.GameComponent, {
+        name: "animator",
+        ctor: function() {
+            this._super();
+        },
+        update: function(dt) {
+            console.log("Animator delta.");
+        }
+    });
+
     plxc.Transform = TransformComponent;
     plxc.Input = InputComponent;
     plxc.Physics = PhysicsComponent;
+    plxc.Animator = Animator;
 
 })(plexus.components);
 

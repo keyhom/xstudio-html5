@@ -148,23 +148,38 @@
         <script src="js/components-test.js" charset="UTF-8"></script>
         <script type="text/javascript">
           (function() {
+              var testObject = new plexus.GameObject();
+              console.log(plexus.GameObject.prototype);
+              // testObject.addComponent(new plexus.components.Input());
+              // testObject.addComponent(new plexus.components.Physics());
+              // testObject.addComponent(new plexus.components.Animator());
+
+              console.log("TestObject: %s", JSON.stringify(testObject, null, 4));
+
+              plexus.GameSystem.getInstance().addObject(testObject);
+
               $('#btnHeroIdle').click(function() {
                   // noop
+                  console.log("Idle");
               });
 
               $('#btnHeroRun').click(function() {
                   // noop
                   var gs = plexus.GameSystem.getInstance();
+                  console.log("Run");
               });
 
               $("#btnHeroHit").click(function() {
                   // noop
+                  console.log("Hit");
               });
 
               $("#btnHeroDead").click(function() {
                   // noop
+                  console.log("Dead");
               });
-          })();
+
+          }())
         </script>
     </body>
 </html>
