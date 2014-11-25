@@ -82,6 +82,16 @@ plexus.components = plexus.components || {};
             if (this._stateChanged) {
                 this._stateChanged = false;
                 console.log("State Changed in Animator.");
+
+                var owner = this.getOwner();
+                if (!owner) return;
+
+                var data = owner.getUserData();
+                if (!data) return;
+
+                var anim = cc.animationCache.getAnimation("huayao_" + this._state);
+                data.stopAllActions();
+                data.runAction(cc.RepeatForever.create(cc.Animate.create(anim)));
             }
         }
     });

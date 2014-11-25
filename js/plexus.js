@@ -137,7 +137,7 @@ window._plexus = plexus;
      */
     var GameObject = plx.Class.extend({
         _components: {},
-        _data: {},
+        _data: null,
         ctor: function() {
             this._id = (+new Date()).toString(16) + (Math.random() * 1000000000 | 0).toString(16) + (++GameObject.sNumOfObjects);
         },
@@ -148,7 +148,8 @@ window._plexus = plexus;
             return this._data;
         },
         setUserData: function(data) {
-            plx.extend(this._data, data);
+            // plx.extend(this._data, data);
+            this._data = data;
         },
         getComponent: function(component) {
             var name = component;
@@ -163,6 +164,9 @@ window._plexus = plexus;
                 return;
 
             this._components[component.name] = component;
+            if (typeof component.setOwner === 'function')
+                component.setOwner(this);
+
             return this;
         },
         // Remove component data by removing the reference to it.
@@ -174,7 +178,11 @@ window._plexus = plexus;
             }
 
             // Remove component data by removing the reference to it.
+            component = this._components[name];
             delete this._components[name];
+            if (typeof component.setOwner === 'function')
+                component.setOwner(null);
+
             return this;
         },
         getTag: function() {
@@ -195,8 +203,9 @@ window._plexus = plexus;
      * @class GameComponent
      */
     var GameComponent = plx.Class.extend({
+        _owner: null,
         ctor: function() {
-            this._owner = null;
+
         },
         getOwner: function() {
             return this._owner;
@@ -273,7 +282,11 @@ window._plexus = plexus;
     var SubSystem = plexus.Class.extend({
         _managed: [],
         check: function(obj) {
-            return true;
+            if (!this.name)
+                return false;
+            if (typeof obj.getComponent === 'function')
+                return obj.getComponent(this.name);
+            return false;
         },
         order: function(obj) {
             if (this.check(obj)) {
@@ -296,6 +309,13 @@ window._plexus = plexus;
                     self.updateObjectDelta(elt, dt);
                 return true;
             }, self);
+        },
+        updateObjectDelta: function(obj, dt) {
+            if (!this.name)
+                return;
+
+            var comp = obj.getComponent(this.name);
+            comp && comp.update(dt);
         }
     });
 
@@ -310,10 +330,6 @@ window._plexus = plexus;
                 return obj.getComponent(this.name);
             }
             return false;
-        },
-        updateObjectDelta: function(obj, dt) {
-            var comp = obj.getComponent(this.name);
-            comp && comp.update(dt);
         }
     });
 

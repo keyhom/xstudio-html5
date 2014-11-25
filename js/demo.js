@@ -1,6 +1,8 @@
 (function(){
     console.log("plugins.js [loaded].");
 
+    var hero = null;
+
     var GameScene = cc.Layer.extend({
         _bg: null,
         _objectSprite: null,
@@ -26,7 +28,7 @@
         onEnter: function() {
             this._super();
 
-            var hero = cc.Sprite.create();
+            hero = cc.Sprite.create();
             hero.setPosition(1056, 317);
             _objectSprite.addChild(hero, 0);
 
@@ -50,6 +52,8 @@
             // cc.eventManager.addListener(l, this);
 
             this._hero = hero;
+
+            $(document.body).trigger("GameLoaded", { object: hero });
         },
         onExit: function() {
             this._super();
