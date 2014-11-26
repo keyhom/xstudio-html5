@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html class="no-js">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
@@ -16,10 +13,11 @@
         <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css"> -->
         <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css"> -->
         <link rel="stylesheet" href="css/bootstrap3/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap3/bootstrap-theme.min.css">
+        <!-- <link rel="stylesheet" href="css/bootstrap3/bootstrap-theme.min.css"> -->
         <!-- <link rel="stylesheet" href="css/bootstrap3/bootstrap.slate.min.css"> -->
         <!-- <link rel="stylesheet" href="css/bootstrap3/bootstrap.paper.min.css"> -->
         <!-- <link rel="stylesheet" href="css/bootstrap3/bootstrap.yeti.min.css"> -->
+        <link rel="stylesheet" href="css/bootstrap3/bootstrap.darkly.min.css">
         <!-- <link rel="stylesheet" href="css/bootstrap3/bootstrap.superhero.min.css"> -->
         <link rel="stylesheet" href="css/bootstrap3/bootstrap-select.min.css">
         <link rel="stylesheet" href="css/normalize.css">
@@ -43,9 +41,14 @@
               /* text-shadow: 0 1px 0 #fff; */
             }
 
+
             .form-control {
               font-family: Microsoft YaHei, Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+              padding: 2px;
               /* text-shadow: 0 1px 0 #fff; */
+              /* border: 1px solid #2E3338;
+              background-color: #363B3F;
+              color: inherit; */
             }
 
             .bootstrap-select.btn-group:not(.input-group-btn),.bootstrap-select.btn-group[class*="col-"] {
@@ -219,13 +222,20 @@
             <div class="panel panel-default">
               <div class="panel-heading" style="padding: 2px 2px 0 2px;">
                 <!-- <h3 class="panel-title">Editor</h3> -->
-            <ul class="nav nav-tabs" role="tablist" style="margin: 0;">
-              <li class="active" role="presentation"><a href="#">Scene</a></li>
-              <li role="presentation"><a href="#">Game</a></li>
-            </ul>
+                <ul class="nav nav-tabs" role="tablist" style="margin: 0;">
+                  <li class="active" role="presentation"><a role="tab" data-toggle="tab" href="#sceneView">Scene</a></li>
+                  <li role="presentation"><a role="tab" data-toggle="tab" href="#gameView">Game</a></li>
+                </ul>
               </div>
-              <div class="panel-body" style="overflow: scroll;background-color: #000;padding: 0;">
-                <canvas id="gameCanvas" width="720" height="480"></canvas>
+              <div class="panel-body" style="overflow: scroll;background-color: #inherit;padding: 0;">
+                <div class="tab-content">
+                  <div id="sceneView" role="tabpanel" class="tab-pane active">
+                    <canvas id="gameCanvas" width="720" height="480" style="min-width: 720px; min-height: 480px;"></canvas>
+                  </div>
+                  <div id="gameView" role="tabpanel" class="tab-pane">
+                    <p>Noop...</p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -242,10 +252,157 @@
           <div id="propertiesView" class="col-sm-4 col-md-4 col-lg-3">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title">Inspector</h3>
+                <h3 class="panel-title">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                  Inspector
+                </h3>
               </div>
               <div class="panel-body">
-                Panel content
+                <div style="margin-bottom: 10px;">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="checkbox">
+                    </span>
+                    <input type="text" class="form-control" name="Hero" value="Hero" placeholder="Name...">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjTag">Tag</label></span>
+                    <select id="selObjTag" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
+                      <optgroup label="builtin">
+                        <option value="0">Untagged</option>
+                        <option value="1">Respawn</option>
+                        <option value="2">Finish</option>
+                        <option value="3">EditorOnly</option>
+                        <option value="4">MainCamera</option>
+                        <option value="5">Player</option>
+                        <option value="6">GameController</option>
+                      </optgroup>
+                      <optgroup label="other">
+                        <option value="-1">Add Tags...</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjLayer">Layer</label></span>
+                    <select id="selObjLayer" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
+                      <optgroup label="builtin">
+                        <option value="0">Default</option>
+                        <option value="1">TransparentFX</option>
+                        <option value="2">Ignore Raycast</option>
+                        <option value="3">Water</option>
+                        <option value="4">UI</option>
+                      </optgroup>
+                      <optgroup label="other">
+                        <option value="-1">Add Layer...</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="components" class="panel-group" role="tablist" aria-multiselectable="true">
+                  <div class="panel panel-default">
+                    <div id="transformHeading" class="panel-heading" role="tab">
+                      <h3 class="panel-title">
+                        <a href="#transformCollapse" data-toogle="collapse" data-parent="#components" aria-expanded="true" aria-controls="transformCollapse">
+                          <span class="glyphicon glyphicon-file"></span>
+                          Transform
+                        </a>
+                      </h3>
+                    </div>
+                    <div id="transformCollapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="transformHeading">
+                      <div class="panel-body" style="padding: 4px;">
+                        <table>
+                          <tr>
+                            <td>Position</td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">X</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">Y</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">Z</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Rotation</td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">X</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">Y</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">Z</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Scale</td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">X</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">Y</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <label for="#">Z</label>
+                                </span>
+                                <input type="text" class="form-control" value="0">
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="text-align: center;margin-top: 10px;">
+                  <button id="btnAddComponent" class="btn btn-primary">Add Component</button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -321,14 +478,15 @@
           });
 
           (function() {
-              // $(window).resize(function() {
-              //     console.log($(window).height());
-              //   $(document.body).height($(window).height());
-              // });
-              $('#selResolution').selectpicker();
+              $(window).resize(function() {
+                // $(document.body).height($(window).height());
+                  var w = $('#sceneView').width();
+                  var h = $('#sceneView').height();
+                  console.log("width: %f, height: %f", w, h);
+              });
+              $('.selectpicker').selectpicker();
+              // $('.collapse').collapse();
           }())
         </script>
     </body>
 </html>
-<!-- vi:ts=2 sw=2 et foldmethod=marker
--->
