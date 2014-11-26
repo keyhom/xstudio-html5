@@ -1,0 +1,63 @@
+{
+  "name": "xstudio",
+  "version": "1.0.0",
+  "title": "XStudio Lite",
+  "description": "A Html5 Game Developing Studio.",
+  "author": {
+    "name": "Jeremy",
+    "email": "keyhom.c@gmail.com",
+    "url": "http://github.com/keyhom/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/keyhom/xstudio-html5.git"
+  },
+  "bugs": {
+    "url": "http://github.com/keyhom/xstudio-html5/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/keyhom/xstudio-html5/blob/master/LICENSE"
+    }
+  ],
+  "scripts": {
+    "test": "grunt default"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "keywords": [
+    "xstudio",
+    "xstudio-lite",
+    "bootstrap",
+    "game",
+    "studio"
+  ],
+  "dependencies": {
+    "async": "~0.1.22",
+    "connect": "~2.14.5"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-banner": "~0.2.2",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-copy": "~0.4.0",
+    "grunt-contrib-cssmin": "~0.4.1",
+    "grunt-contrib-connect": "~0.8.0",
+    "grunt-contrib-less": "~0.12.0",
+    "grunt-contrib-compress": "~0.4.0",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-qunit": "~0.5.2",
+    "grunt-jsbeautifier": "~0.2.6",
+    "grunt-contrib-livereload": "~0.1.0",
+    "grunt-recess": "~1.0.0",
+    "grunt-express-server": "~0.4.0",
+    "load-grunt-tasks": "^0.6.0"
+  },
+  "private": true
+}
