@@ -10,91 +10,107 @@ module.exports = function(grunt) {
 		' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
 		' * Licensed under the <%= pkg.license.type %> license (<%= pkg.license.url %>)\n' +
 		' */\n',
-        jqueryCheck: 'if (typeof jQuery === \'undefined\') { throw new Error(\'Fuel UX\\\'s JavaScript requires jQuery\') }\n\n',
+        plexusBanner: '/*!\n' +
+                         ' * Plexus Lite v<%= pkg.version %> \n' +
+                         ' * Copyright 2014-<%=grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+                         ' * Licensed under the <%= pkg.license.type %> license (<%= pkg.license.url %>)\n' +
+                         ' */\n',
+        jqueryCheck: 'if (typeof jQuery === \'undefined\') { throw new Error(\'Requires jQuery\') }\n\n',
         bootstrapCheck: 'if (typeof jQuery.fn.dropdown === \'undefined\' || typeof jQuery.fn.collapse === \'undefined\') ' +
-		'{ throw new Error(\'Fuel UX\\\'s JavaScript requires Bootstrap\') }\n\n',
+		'{ throw new Error(\'Requires Bootstrap\') }\n\n',
         pkg: grunt.file.readJSON('package.json'),
         uglify: {
             options: {
                 banner: '/*! <%=pkg.name %> <%=grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: 'src/<%=pkg.name %>.js',
-                dest: 'build/<%=pkg.name %>.min.js'
+                src: 'src/js/<%=pkg.name %>.js',
+                dest: 'dist/js/<%=pkg.name %>.min.js'
             }
         },
         clean: {
             dist: ['dist'],
-            zipsrc: ['dist/xstudio-lite']
+            zipsrc: ['dist/xstudio']
         },
         compress: {
             zip: {
                 files: [{
                     cwd: 'dist/',
                     expand: true,
-                    src: ['xstudio-lite/**']
+                    src: ['xstudio/**']
                 }],
                 options: {
-                    archive: 'dist/xstudio-lite.zip',
+                    archive: 'dist/xstudio.zip',
                     mode: 'zip'
                 }
             }
         },
         concat: {
-            dist: {
-                files: {
-                    // manually concatenate JS files (due to dependency management)
-                    'dist/js/xstudio.js': [
-                        'js/checkbox.js',
-                        'js/combobox.js'
-                    ]
-                },
-                options: {
-                    banner: '<%=banner %>' + '\n\n' +
-                    '(function(factory) {\n' +
-                    '\tif (typeof define === \'function\' && define.amd) {\n' +
-                    '\t\tdefine([\'jquery\',\'bootstrap\'], factory);\n' +
-                    '\t} else {\n}' +
-                    '\t\tfactory(jQuery);\n' +
-                    '\t}\n' +
-                    '}(function (jQuery) {\n\n' +
-                    '<%= jqueryCheck %>' +
-                    '<%= bootstrapCheck %>',
-                    footer: '\n}));',
-                    process: function(source) {
-                        source = '(function ($) {\n\n)' +
-                        source.replace(/\/\/ -- BEGIN UMD WRAPPER PREFACE --(\n|.)*\/\/ -- END UMD WRAPPER PREFACE --/g, '') ;
-                        source = source.replace(/\/\/ -- BEGIN UMD WRAPPER ATERWORD --(\n|.)*\/\/ -- END UMD WRAPPER AFTERWORD --/g, '') + '\n})(jQuery);\n\n';
-                        return source;
-                    }
-                }
-            }
-        },
-        connect: {
-            server: {
-                optoins: {
-                    hostname: '*',
-                    port: 8000
-                }
+            options: {
+                stripBanners: false,
+                separator: ';'
             },
-            testServer: {
+            plexus: {
                 options: {
-                    hostname: '*',
-                    port: 9000 // allows main server to be run simultaneously
-                }
+                    banner: '<%= plexusBanner %>\n'
+                },
+                src: [
+                    'src/plexus/js/plexus-base.js',
+                    'src/plexus/js/components.js'
+                ],
+                dest: 'build/js/plexus.js'
             }
+//            dist: {
+//                files: {
+//                    // manually concatenate JS files (due to dependency management)
+//                    'dist/js/xstudio.js': [
+//                        'src/js/checkbox.js',
+//                        'src/js/combobox.js'
+//                    ]
+//                },
+//                options: {
+//                    banner: '<%=banner %>' + '\n\n' +
+//                    '(function(factory) {\n' +
+//                    '\tif (typeof define === \'function\' && define.amd) {\n' +
+//                    '\t\tdefine([\'jquery\',\'bootstrap\'], factory);\n' +
+//                    '\t} else {\n' +
+//                    '\t\tfactory(jQuery);\n' +
+//                    '\t}\n' +
+//                    '}(function (jQuery) {\n\n' +
+//                    '<%= jqueryCheck %>' +
+//                    '<%= bootstrapCheck %>',
+//                    footer: '\n}));',
+//                    process: function(source) {
+//                        source = '(function ($) {\n\n)' +
+//                        source.replace(/\/\/ -- BEGIN UMD WRAPPER PREFACE --(\n|.)*\/\/ -- END UMD WRAPPER PREFACE --/g, '') ;
+//                        source = source.replace(/\/\/ -- BEGIN UMD WRAPPER ATERWORD --(\n|.)*\/\/ -- END UMD WRAPPER AFTERWORD --/g, '') + '\n})(jQuery);\n\n';
+//                        return source;
+//                    }
+//                }
+//            }
         },
         copy: {
-            fonts: {
-                cwd: 'font/',
-                dest: 'dist/fonts',
+            third_party: {
+                cwd: 'src/third_party/',
+                dest: 'build/',
                 expand: true,
-                filter: 'isFile',
-                src: ['*']
+                src: ['**']
             },
-            zipsrc: {
-                cwd: 'dist/',
-                dest: 'dist/xstudio/',
+            main: {
+                cwd: 'src/main/',
+                dest: 'build/',
+                expand: true,
+                src: ['**']
+            },
+            html: {
+                cwd: '.',
+                dest: 'build/',
+                expand: true,
+                src: ['*.html', 'src/main/**/*.html']
+            },
+            res: {
+                cwd: 'res/',
+                dest: 'build/res/',
                 expand: true,
                 src: ['**']
             }
@@ -168,37 +184,46 @@ module.exports = function(grunt) {
                 }
             }
         },
+        less: {
+            compileTheme: {
+                options: {
+                    strictMath: true,
+                    sourceMap: true,
+                    outputSourceFiles: true,
+                    sourceMapURL: '<%= pkg.name %>-theme.css.map',
+                    sourceMapFilename: 'build/css/<%= pkg.name %>-theme.css.map'
+                },
+                src: ['src/main/less/variables.less', 'src/main/less/bootswatch.less'],
+                dest: 'build/css/<%= pkg.name %>-theme.css'
+            }
+        },
         watch: {
-            full: {
-                files: ['Grunfile.js', 'fonts/**', 'js/**', 'less/**', 'lib/**', 'test/**', 'index.html'],
-                options: {
-                    livereload: true
-                },
-                tasks: ['test', 'dist']
+            options: {
+                livereload: true
             },
-            css: {
-                files: ['Grunfile.js', 'fonts/**', 'js/**', 'less/**', 'lib/**', 'test/**', 'index.html'],
-                options: {
-                    livereload: true
-                },
-                tasks: ['distcss']
+            res: {
+                files: ['res/**'],
+                tasks: ['copy:res']
             },
-            contrib: {
-                files: ['Grunfile.js', 'fonts/**', 'js/**', 'less/**', 'lib/**', 'test/**', 'index.html'],
+            web: {
+                files: ['Grunfile.js', 'src/**', 'index.html'],
                 options: {
                     livereload: true
                 },
-                tasks: ['test']
+                tasks: ['make']
             }
         },
         express: {
             options: {
                 // Override defaults here.
-                port: 8082
             },
-            dev: {
+            web: {
                 options: {
-                    script: 'devserver.js'
+                    port: 8081,
+                    server: 'src/server/devserver',
+                    bases: ['build'],
+                    livereload: true,
+                    servereload: true
                 }
             }
         }
@@ -210,28 +235,29 @@ module.exports = function(grunt) {
     });
 
     // Load the plugin that provides the 'uglify' task.
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    // grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify']);
+    // grunt.registerTask('default', ['uglify']);
 
     //------------------------------
     // Build Phases
     //------------------------------
 
     // JS distribution task.
-    grunt.registerTask('distjs', 'concat, uglify and beautifying JS.', ['concat', 'uglify', 'jsbeautifier']);
+    // grunt.registerTask('distjs', 'concat, uglify and beautifying JS.', ['concat', 'uglify', 'jsbeautifier']);
     // CSS distribution task
-    grunt.registerTask('distcss', 'less compile CSS', ['less', 'usebannder']);
+    // grunt.registerTask('distcss', 'less compile CSS', ['less', 'usebannder']);
     // Full distribution task
-    grunt.registerTask('dist', 'build and zip dist --contributors should do this!!!', ['clean:dist', 'distcss', 'copy:fonts', 'distjs', 'distzip']);
+    // grunt.registerTask('dist', 'build and zip dist --contributors should do this!!!', ['clean:dist', 'distcss', 'copy:fonts', 'distjs', 'distzip']);
 
     //------------------------------
     // Serve
     //------------------------------
 
-    grunt.registerTask('serve', 'serve files without compilation', ['test', 'connect:server', 'watch:contrib']);
-    grunt.registerTask('servefast', 'serve files without compilation or watch (tests take time...)', ['connect:server']);
-    grunt.registerTask('servedist', 'build dist directory and serve files with compilation', ['test', 'dist', 'connect:server', 'watch:full']);
-    grunt.registerTask('dev', ['express:dev', 'watch:contrib']);
+    grunt.registerTask('make', ['copy', 'concat', 'less']);
+    // grunt.registerTask('web', 'Lanch webserver and watch tasks.', ['parallel:web']);
+    grunt.registerTask('web', 'Lauch webserver and watch tasks.', ['express:web', 'watch:web']);
 };
+
+// vi:ft=javascript ts=4 sw=4 et :
