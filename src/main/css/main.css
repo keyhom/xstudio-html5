@@ -46,9 +46,8 @@ html {
 hr {
     display: block;
     height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
+    // border: 0;
+    // border-top: 1px solid #ccc;
     padding: 0;
 }
 
@@ -212,6 +211,16 @@ textarea {
 
 .clearfix {
     *zoom: 1;
+}
+
+/*
+ * Bootstrap-select fixed.
+ */
+.bootstrap-select.btn-group:not(.input-group-btn),.bootstrap-select.btn-group[class*="span"]{
+    float:none;
+    display:inline-block;
+    margin-bottom:0px;
+    margin-left:0;
 }
 
 /* ==========================================================================

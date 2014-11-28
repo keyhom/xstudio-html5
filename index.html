@@ -41,8 +41,9 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="navbar" role="navigation"> <!-- {{{ -->
+        <!-- <div class="navbar navbar-inverse" role="navigation">  -->
           <div class="container" style="width: 100%">
-            <div class="navbar-header">
+            <div class="navbar-header" style="padding: 0 20px;">
               <button type="button" class="navbar-toggle"
                   data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle Navigation</span>
@@ -100,7 +101,7 @@
         <!-- }}} -->
 
         <div class="btn-toolbar" role="toolbar" style="padding: 5px;"> <!-- {{{ -->
-          <div class="btn-group btn-group-sm">
+          <div class="btn-group">
             <a class="btn btn-default" href="#">
               <span class="glyphicon glyphicon-asterisk"></span>
             </a>
@@ -115,7 +116,7 @@
             </a>
           </div>
 
-          <div class="btn-group btn-group-sm" style="position: relative; left: 50%;margin-left: -240px;">
+          <div class="btn-group" style="position: relative; left: 50%;margin-left: -240px;">
             <a class="btn btn-default" href="#">
               <span class="glyphicon glyphicon-play"></span>
             </a>
@@ -127,8 +128,8 @@
             </a>
           </div>
 
-          <div class="btn-group btn-group-xs pull-right">
-            <select id="selResolution" name="selResolution" class="selectpicker" data-style="btn-default btn-sm" data-size="100%" data-container="body">
+          <div class="btn-group pull-right">
+            <select id="selResolution" name="selResolution" class="selectpicker" data-style="btn-default" data-size="100%" data-container="body">
               <option value="0">Default</option>
               <option value="480:320">480 * 320</option>
               <option value="320:480">320 * 480</option>
@@ -211,7 +212,7 @@
             </div>
 
             <div style="margin: 20px auto; text-align: center;">
-              <div id="btnGroupCtrl" class="btn-group btn-group-sm">
+              <div id="btnGroupCtrl" class="btn-group">
                 <button id="btnHeroIdle" class="btn btn-default">Idle</button>
                 <button id="btnHeroRun"  class="btn btn-default">Run</button>
                 <button id="btnHeroHit"  class="btn btn-default">Hit</button>
@@ -229,14 +230,14 @@
                 </h3>
               </div>
               <div class="panel-body">
-                <div style="margin-bottom: 10px;">
-                  <div class="input-group">
+                <div>
+                  <div class="input-group input-sm">
                     <span class="input-group-addon">
                       <input type="checkbox">
                     </span>
-                    <input type="text" class="form-control" name="Hero" value="Hero" placeholder="Name...">
+                    <input type="text" class="form-control" name="Hero" value="" placeholder="Name...">
                   </div>
-                  <div class="input-group">
+                  <div class="input-group input-sm">
                     <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjTag">Tag</label></span>
                     <select id="selObjTag" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
                       <optgroup label="builtin">
@@ -253,7 +254,7 @@
                       </optgroup>
                     </select>
                   </div>
-                  <div class="input-group">
+                  <div class="input-group input-sm">
                     <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjLayer">Layer</label></span>
                     <select id="selObjLayer" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
                       <optgroup label="builtin">
@@ -270,6 +271,8 @@
                   </div>
                 </div>
 
+                <hr>
+
                 <div id="components" class="panel-group" role="tablist" aria-multiselectable="true">
                   <div class="panel panel-default">
                     <div id="transformHeading" class="panel-heading" role="tab">
@@ -282,9 +285,11 @@
                     </div>
                     <div id="transformCollapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="transformHeading">
                       <div class="panel-body" style="padding: 4px;">
-                        <table>
+                        <table style="border-spacing: 1px;">
                           <tr>
-                            <td>Position</td>
+                            <td>
+                              <label>Position</label>
+                            </td>
                             <td>
                               <div class="input-group">
                                 <span class="input-group-addon">
@@ -311,7 +316,9 @@
                             </td>
                           </tr>
                           <tr>
-                            <td>Rotation</td>
+                            <td>
+                              <label>Rotation</label>
+                            </td>
                             <td>
                               <div class="input-group">
                                 <span class="input-group-addon">
@@ -338,7 +345,9 @@
                             </td>
                           </tr>
                           <tr>
-                            <td>Scale</td>
+                            <td>
+                              <label>Scale</label>
+                            </td>
                             <td>
                               <div class="input-group">
                                 <span class="input-group-addon">
@@ -370,11 +379,9 @@
                   </div>
                 </div>
 
-                <div style="text-align: center;margin-top: 10px;">
+                <div style="text-align: center;">
                   <button id="btnAddComponent" class="btn btn-primary">Add Component</button>
                 </div>
-
-
 
               </div>
             </div>

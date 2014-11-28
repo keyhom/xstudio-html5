@@ -20,6 +20,8 @@
 @brand-warning:         #f89406;
 @brand-danger:          #ee5f5b;
 
+@gray-border:           rgba(0, 0, 0, 0.3);
+@default-text-shadow:   rgba(0, 0, 0, 1);
 
 //== Scaffolding
 //
@@ -87,17 +89,23 @@
 //
 //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
-@padding-base-vertical:     8px;
-@padding-base-horizontal:   12px;
+// @padding-base-vertical:     8px;
+// @padding-base-horizontal:   12px;
+@padding-base-vertical:     5px;
+@padding-base-horizontal:   10px;
 
-@padding-large-vertical:    14px;
-@padding-large-horizontal:  16px;
+// @padding-large-vertical:    14px;
+// @padding-large-horizontal:  16px;
+@padding-large-vertical:    8px;
+@padding-large-horizontal:  12px;
 
-@padding-small-vertical:    5px;
-@padding-small-horizontal:  10px;
+// @padding-small-vertical:    5px;
+// @padding-small-horizontal:  10px;
+@padding-small-vertical:    2px;
+@padding-small-horizontal:  5px;
 
 @padding-xs-vertical:       1px;
-@padding-xs-horizontal:     5px;
+@padding-xs-horizontal:     2px;
 
 @line-height-large:         1.33;
 @line-height-small:         1.5;
@@ -184,7 +192,7 @@
 //** Text color for `<input>`s
 @input-color:                    #ccc;
 //** `<input>` border color
-@input-border:                   #333;
+@input-border:                   @gray-border; // #333;
 
 // TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -195,7 +203,7 @@
 @input-border-radius-small:      @border-radius-small;
 
 //** Border color for inputs on focus
-@input-border-focus:             #000; // #66afe9;
+@input-border-focus:             rgba(0, 0, 0, 0.75); // #66afe9;
 
 //** Placeholder text color
 @input-color-placeholder:        @gray-light;
@@ -211,7 +219,7 @@
 @legend-border-color:            darken(@gray-darker, 5%);
 
 //** Background color for textual input addons
-@input-group-addon-bg:           @gray-darker;
+@input-group-addon-bg:           darken(@gray-darker, 3%);
 //** Border color for textual input addons
 @input-group-addon-border-color: @input-border;
 
@@ -350,7 +358,7 @@
 // Basics of a navbar
 @navbar-height:                    35px;
 @navbar-margin-bottom:             0; // @line-height-computed;
-@navbar-border-radius:             @border-radius-base;
+@navbar-border-radius:             0; // @border-radius-base;
 @navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
 @navbar-collapse-max-height:       340px;
@@ -410,20 +418,20 @@
 //##
 
 //=== Shared nav styles
-@nav-link-padding:                          10px 15px;
+@nav-link-padding:                          4px 20px;
 @nav-link-hover-bg:                         lighten(@body-bg, 10%);
 
 @nav-disabled-link-color:                   @gray-light;
 @nav-disabled-link-hover-color:             @gray-light;
 
 //== Tabs
-@nav-tabs-border-color:                     darken(@gray-darker, 5%);
+@nav-tabs-border-color:                     @gray-border; // darken(@gray-darker, 5%);
 
 @nav-tabs-link-hover-border-color:          darken(@gray-darker, 5%);
 
-@nav-tabs-active-link-hover-bg:             lighten(@body-bg, 10%);
-@nav-tabs-active-link-hover-color:          #fff;
-@nav-tabs-active-link-hover-border-color:   darken(@gray-darker, 5%);
+@nav-tabs-active-link-hover-bg:             lighten(@gray-border, 10%); // lighten(@body-bg, 10%);
+@nav-tabs-active-link-hover-color:          rgba(0, 175, 255, 0.6); // #fff;
+@nav-tabs-active-link-hover-border-color:   @gray-border; // darken(@gray-darker, 5%);
 
 @nav-tabs-justified-link-border-color:            @nav-tabs-border-color;
 @nav-tabs-justified-active-link-border-color:     @body-bg;
@@ -597,7 +605,8 @@
 //** Modal backdrop opacity
 @modal-backdrop-opacity:      .5;
 //** Modal header border color
-@modal-header-border-color:   darken(@gray-darker, 5%);
+@modal-header-border-color:   darken(@gray-border, 5%);
+// darken(@gray-darker, 5%);
 //** Modal footer border color
 @modal-footer-border-color:   @modal-header-border-color;
 
@@ -693,17 +702,17 @@
 //##
 
 @panel-bg:                    lighten(@body-bg, 3%);
-@panel-body-padding:          15px;
-@panel-heading-padding:       10px 15px;
+@panel-body-padding:          5px;
+@panel-heading-padding:       5px 10px;
 @panel-footer-padding:        @panel-heading-padding;
 @panel-border-radius:         @border-radius-base;
 
 //** Border color for elements within panels
-@panel-inner-border:          rgba(0, 0, 0, 0.6);
+@panel-inner-border:          @gray-border;
 @panel-footer-bg:             lighten(@body-bg, 10%);
 
 @panel-default-text:          @text-color;
-@panel-default-border:        rgba(0, 0, 0, 0.6);
+@panel-default-border:        @gray-border; // rgba(0, 0, 0, 0.3);
 @panel-default-heading-bg:    @panel-footer-bg;
 
 @panel-primary-text:          #fff;

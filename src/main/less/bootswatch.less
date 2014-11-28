@@ -19,8 +19,8 @@
 .navbar {
 
   .btn-shadow(@navbar-default-bg);
-  border: 1px solid rgba(0, 0, 0, 0.6);
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 1px @default-text-shadow;
 
   &-inverse {
     .btn-shadow(@navbar-inverse-bg);
@@ -58,8 +58,8 @@
 
 .btn,
 .btn:hover {
-  border-color: rgba(0, 0, 0, 0.6);
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 0, 0, 0.4);
+  text-shadow: 1px 1px 1px @default-text-shadow;
 }
 
 .btn-default {
@@ -117,8 +117,8 @@
 
 // Typography =================================================================
 
-h1, h2, h3, h4, h5, h6 {
-  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+h1, h2, h3, h4, h5, h6, input, label {
+  text-shadow: 1px 1px 1px @default-text-shadow;
 }
 
 .text-primary,
@@ -182,6 +182,12 @@ textarea {
   color: @input-color;
 }
 
+.input-group {
+  .form-control {
+    padding: @padding-xs-vertical @padding-xs-horizontal;
+  }
+}
+
 .has-warning {
   .help-block,
   .control-label,
@@ -241,8 +247,8 @@ legend {
 }
 
 .input-group-addon {
-  border-color: rgba(0, 0, 0, 0.6);
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  border-color: lighten(@gray-border, 15%); // rgba(0, 0, 0, 0.6);
+  text-shadow: 1px 1px 1px @default-text-shadow;
   .btn-shadow(@btn-default-bg);
   color: @btn-default-color;
 }
@@ -259,12 +265,18 @@ legend {
 
 }
 
+.nav-tabs {
+  & > li > a {
+    text-shadow: 1px 1px 1px @default-text-shadow;
+  }
+}
+
 .nav-pills {
 
   & > li > a {
     .btn-shadow(@btn-default-bg);
     border: 1px solid rgba(0, 0, 0, 0.6);
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 1px @default-text-shadow;
 
     &:hover {
       .btn-shadow-inverse(@btn-default-bg);
@@ -289,7 +301,7 @@ legend {
 
   & > li > a,
   & > li > span {
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 1px @default-text-shadow;
     .btn-shadow(@btn-default-bg);
 
     &:hover {
@@ -315,7 +327,7 @@ legend {
 
   & > li > a {
     .btn-shadow(@btn-default-bg);
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 1px @default-text-shadow;
 
     &:hover {
       .btn-shadow-inverse(@btn-default-bg);
@@ -331,7 +343,7 @@ legend {
 
 .breadcrumb {
   border: 1px solid rgba(0, 0, 0, 0.6);
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 1px @default-text-shadow;
   .btn-shadow(@btn-default-bg);
 }
 
@@ -416,4 +428,12 @@ a.list-group-item {
   .panel-heading {
     border-color: #000;
   }
+}
+
+hr {
+    margin: @padding-small-horizontal 0;
+}
+
+.panel-title {
+    // font-weight: bold;
 }
