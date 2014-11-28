@@ -59,6 +59,31 @@ module.exports = function(grunt) {
                     'src/plexus/js/components.js'
                 ],
                 dest: 'build/js/plexus.js'
+            },
+            studio: {
+                options: {
+                    banner: '<%= banner %>\n\n' +
+                   '(function(factory) {\n' +
+                   '\tif (typeof define === \'function\' && define.amd) {\n' +
+                   '\t\tdefine([\'jquery\',\'bootstrap\'], factory);\n' +
+                   '\t} else {\n' +
+                   '\t\tfactory(jQuery);\n' +
+                   '\t}\n' +
+                   '}(function (jQuery) {\n\n' +
+                   '<%= jqueryCheck %>' +
+                   '<%= bootstrapCheck %>',
+                   footer: '\n}));',
+                   process: function(source) {
+                       source = '(function ($) {\n\n' +
+                       source.replace(/\/\/ -- BEGIN UMD WRAPPER PREFACE --(\n|.)*\/\/ -- END UMD WRAPPER PREFACE --/g, '') ;
+                       source = source.replace(/\/\/ -- BEGIN UMD WRAPPER ATERWORD --(\n|.)*\/\/ -- END UMD WRAPPER AFTERWORD --/g, '') + '\n})(jQuery);\n\n';
+                       return source;
+                   }
+                },
+                src: [
+                    'src/studio/js/hierarchy.js'
+                ],
+                dest: 'build/js/studio.js'
             }
 //            dist: {
 //                files: {

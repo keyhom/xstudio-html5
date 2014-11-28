@@ -21,26 +21,14 @@
         <!-- <link rel="stylesheet" href="css/bootstrap3/bootstrap.superhero.min.css"> -->
         <link rel="stylesheet" href="css/xstudio-theme.css">
         <link rel="stylesheet" href="css/bootstrap3/bootstrap-select.min.css">
+        <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
         <link rel="stylesheet" href="css/main.css">
-        <style text="text/css">
-            html {
-              height: 100%;
-            }
-
-            body {
-              position: relative;
-              margin: 0;
-              padding: 0;
-              overflow: hidden;
-            }
-
-        </style>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="navbar" role="navigation"> <!-- {{{ -->
+        <div class="navbar navbar-fixed-top" role="navigation"> <!-- {{{ -->
         <!-- <div class="navbar navbar-inverse" role="navigation">  -->
           <div class="container" style="width: 100%">
             <div class="navbar-header" style="padding: 0 20px;">
@@ -100,289 +88,295 @@
         </div>
         <!-- }}} -->
 
-        <div class="btn-toolbar" role="toolbar" style="padding: 5px;"> <!-- {{{ -->
-          <div class="btn-group">
-            <a class="btn btn-default" href="#">
-              <span class="glyphicon glyphicon-asterisk"></span>
-            </a>
-            <a class="btn btn-default" href="#">
-              <span class="glyphicon glyphicon-move"></span>
-            </a>
-            <a class="btn btn-default" href="#">
-              <span class="glyphicon glyphicon-refresh"></span>
-            </a>
-            <a class="btn btn-default" href="#">
-              <span class="glyphicon glyphicon-fullscreen"></span>
-            </a>
-          </div>
+        <div class="container fullwidth fullheight" style="padding-top: 35px; padding-bottom: 25px">
+          <div id="workbench" class="row fullheight">
+            <div class="btn-toolbar" role="toolbar" style="padding: 5px;"> <!-- {{{ -->
+              <div class="btn-group">
+                <a class="btn btn-default" href="#">
+                  <span class="glyphicon glyphicon-asterisk"></span>
+                </a>
+                <a class="btn btn-default" href="#">
+                  <span class="glyphicon glyphicon-move"></span>
+                </a>
+                <a class="btn btn-default" href="#">
+                  <span class="glyphicon glyphicon-refresh"></span>
+                </a>
+                <a class="btn btn-default" href="#">
+                  <span class="glyphicon glyphicon-fullscreen"></span>
+                </a>
+              </div>
 
-          <div class="btn-group" style="position: relative; left: 50%;margin-left: -240px;">
-            <a class="btn btn-default" href="#">
-              <span class="glyphicon glyphicon-play"></span>
-            </a>
-            <a class="btn btn-default" href="#">
-              <span class="glyphicon glyphicon-pause"></span>
-            </a>
-            <a class="btn btn-default" href="#">
-              <span class="glyphicon glyphicon-step-forward"></span>
-            </a>
-          </div>
+              <div class="btn-group" style="position: relative; left: 50%;margin-left: -240px;">
+                <a class="btn btn-default" href="#">
+                  <span class="glyphicon glyphicon-play"></span>
+                </a>
+                <a class="btn btn-default" href="#">
+                  <span class="glyphicon glyphicon-pause"></span>
+                </a>
+                <a class="btn btn-default" href="#">
+                  <span class="glyphicon glyphicon-step-forward"></span>
+                </a>
+              </div>
 
-          <div class="btn-group pull-right">
-            <select id="selResolution" name="selResolution" class="selectpicker" data-style="btn-default" data-size="100%" data-container="body">
-              <option value="0">Default</option>
-              <option value="480:320">480 * 320</option>
-              <option value="320:480">320 * 480</option>
-              <option value="960:640">960 * 640</option>
-              <option value="640:960">640 * 960</option>
-              <option value="1024:768">1024 * 768</option>
-              <option value="768:1024">768 * 1024</option>
-              <option value="?">Custom Size(*)</option>
-            </select>
-          </div>
+              <div class="btn-group pull-right">
+                <select id="selResolution" name="selResolution" class="selectpicker" data-style="btn-default" data-size="100%" data-container="body">
+                  <option value="0">Default</option>
+                  <option value="480:320">480 * 320</option>
+                  <option value="320:480">320 * 480</option>
+                  <option value="960:640">960 * 640</option>
+                  <option value="640:960">640 * 960</option>
+                  <option value="1024:768">1024 * 768</option>
+                  <option value="768:1024">768 * 1024</option>
+                  <option value="?">Custom Size(*)</option>
+                </select>
+              </div>
 
-          <!-- <div class="btn-group pull-right"> -->
-            <!-- <form class="input-group" action="#"> -->
-              <!-- <input id="id_search" class="form-control" type="text" name="search" maxlength="200"> -->
-              <!-- <span class="input-group-btn"> -->
-                <!-- <button class="btn btn-default btn-group" type="submit" name="submit_search" value="search">Search</button> -->
-              <!-- </span> -->
-            <!-- </form> -->
-          <!-- </div> -->
-        </div> <!-- }}} -->
+              <!-- <div class="btn-group pull-right"> -->
+                <!-- <form class="input-group" action="#"> -->
+                  <!-- <input id="id_search" class="form-control" type="text" name="search" maxlength="200"> -->
+                  <!-- <span class="input-group-btn"> -->
+                    <!-- <button class="btn btn-default btn-group" type="submit" name="submit_search" value="search">Search</button> -->
+                  <!-- </span> -->
+                <!-- </form> -->
+              <!-- </div> -->
+            </div> <!-- }}} -->
 
-        <div class="row" style="padding: 0 5px;">
-          <div id="hierarchyView" class="col-sm-3 col-md-3 col-lg-2"> <!-- {{{ -->
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Hierarchy</h3>
-              </div>
-              <div class="panel-body">
-                Panel content
-              </div>
-            </div>
-
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <h3 class="panel-title">Project</h3>
-              </div>
-              <div class="panel-body">
-                Panel content
-              </div>
-            </div>
-
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <h3 class="panel-title">Animation</h3>
-              </div>
-              <div class="panel-body">
-                Panel content
-              </div>
-            </div>
-
-            <div class="panel panel-danger">
-              <div class="panel-heading">
-                <h3 class="panel-title">Profiler</h3>
-              </div>
-              <div class="panel-body">
-                Panel content
-              </div>
-            </div>
-          </div> <!-- }}} -->
-
-          <div id="editorView" class="col-sm-5 col-md-5 col-lg-7">
-            <div class="panel panel-default">
-              <div class="panel-heading" style="padding: 2px 2px 0 2px;">
-                <!-- <h3 class="panel-title">Editor</h3> -->
-                <ul class="nav nav-tabs" role="tablist" style="margin: 0;">
-                  <li class="active" role="presentation"><a role="tab" data-toggle="tab" href="#sceneView">Scene</a></li>
-                  <li role="presentation"><a role="tab" data-toggle="tab" href="#gameView">Game</a></li>
-                </ul>
-              </div>
-              <div class="panel-body" style="overflow: scroll;background-color: #inherit;padding: 0;">
-                <div class="tab-content">
-                  <div id="sceneView" role="tabpanel" class="tab-pane active">
-                    <canvas id="gameCanvas" width="720" height="480" style="min-width: 720px; min-height: 480px;"></canvas>
+            <div id="workbenchContent" class="clearfix">
+              <div id="hierarchyView" class="col-sm-1 col-md-1 col-lg-2"> <!-- {{{ -->
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Hierarchy</h3>
                   </div>
-                  <div id="gameView" role="tabpanel" class="tab-pane">
-                    <p>Noop...</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div style="margin: 20px auto; text-align: center;">
-              <div id="btnGroupCtrl" class="btn-group">
-                <button id="btnHeroIdle" class="btn btn-default">Idle</button>
-                <button id="btnHeroRun"  class="btn btn-default">Run</button>
-                <button id="btnHeroHit"  class="btn btn-default">Hit</button>
-                <button id="btnHeroDead" class="btn btn-default">Dead</button>
-              </div>
-            </div>
-
-          </div>
-          <div id="propertiesView" class="col-sm-4 col-md-4 col-lg-3">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">
-                  <span class="glyphicon glyphicon-info-sign"></span>
-                  Inspector
-                </h3>
-              </div>
-              <div class="panel-body">
-                <div>
-                  <div class="input-group input-sm">
-                    <span class="input-group-addon">
-                      <input type="checkbox">
-                    </span>
-                    <input type="text" class="form-control" name="Hero" value="" placeholder="Name...">
-                  </div>
-                  <div class="input-group input-sm">
-                    <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjTag">Tag</label></span>
-                    <select id="selObjTag" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
-                      <optgroup label="builtin">
-                        <option value="0">Untagged</option>
-                        <option value="1">Respawn</option>
-                        <option value="2">Finish</option>
-                        <option value="3">EditorOnly</option>
-                        <option value="4">MainCamera</option>
-                        <option value="5">Player</option>
-                        <option value="6">GameController</option>
-                      </optgroup>
-                      <optgroup label="other">
-                        <option value="-1">Add Tags...</option>
-                      </optgroup>
-                    </select>
-                  </div>
-                  <div class="input-group input-sm">
-                    <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjLayer">Layer</label></span>
-                    <select id="selObjLayer" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
-                      <optgroup label="builtin">
-                        <option value="0">Default</option>
-                        <option value="1">TransparentFX</option>
-                        <option value="2">Ignore Raycast</option>
-                        <option value="3">Water</option>
-                        <option value="4">UI</option>
-                      </optgroup>
-                      <optgroup label="other">
-                        <option value="-1">Add Layer...</option>
-                      </optgroup>
-                    </select>
+                  <div class="panel-body">
+                    Panel content
                   </div>
                 </div>
 
-                <hr>
+                <div class="panel panel-success">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Project</h3>
+                  </div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
 
-                <div id="components" class="panel-group" role="tablist" aria-multiselectable="true">
-                  <div class="panel panel-default">
-                    <div id="transformHeading" class="panel-heading" role="tab">
-                      <h3 class="panel-title">
-                        <a href="#transformCollapse" data-toogle="collapse" data-parent="#components" aria-expanded="true" aria-controls="transformCollapse">
-                          <span class="glyphicon glyphicon-file"></span>
-                          Transform
-                        </a>
-                      </h3>
-                    </div>
-                    <div id="transformCollapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="transformHeading">
-                      <div class="panel-body" style="padding: 4px;">
-                        <table style="border-spacing: 1px;">
-                          <tr>
-                            <td>
-                              <label>Position</label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">X</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">Y</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">Z</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <label>Rotation</label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">X</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">Y</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">Z</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <label>Scale</label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">X</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">Y</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                            <td>
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <label for="#">Z</label>
-                                </span>
-                                <input type="text" class="form-control" value="0">
-                              </div>
-                            </td>
-                          </tr>
-                        </table>
+                <div class="panel panel-warning">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Animation</h3>
+                  </div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+
+                <div class="panel panel-danger">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Profiler</h3>
+                  </div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+              </div> <!-- }}} -->
+
+              <div id="editorView" class="col-sm-7 col-md-7 col-lg-7 fullheight">
+                <div class="panel panel-default fullheight">
+                  <div class="panel-heading" style="padding: 2px 2px 0 2px;">
+                    <!-- <h3 class="panel-title">Editor</h3> -->
+                    <ul class="nav nav-tabs" role="tablist" style="margin: 0;">
+                      <li class="active" role="presentation"><a role="tab" data-toggle="tab" href="#sceneView">Scene</a></li>
+                      <li role="presentation"><a role="tab" data-toggle="tab" href="#gameView">Game</a></li>
+                    </ul>
+                  </div>
+                  <div id="editorViewContent" class="panel-body" style="overflow: hidden;background-color: #inherit;padding: 0;">
+                    <div class="tab-content">
+                      <div id="sceneView" role="tabpanel" class="tab-pane active">
+                        <canvas id="gameCanvas" width="720" height="480"></canvas>
+                      </div>
+                      <div id="gameView" role="tabpanel" class="tab-pane">
+                        <p>Noop...</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div style="text-align: center;">
-                  <button id="btnAddComponent" class="btn btn-primary">Add Component</button>
+                <div style="margin: 20px auto; text-align: center;">
+                  <div id="btnGroupCtrl" class="btn-group">
+                    <button id="btnHeroIdle" class="btn btn-default">Idle</button>
+                    <button id="btnHeroRun"  class="btn btn-default">Run</button>
+                    <button id="btnHeroHit"  class="btn btn-default">Hit</button>
+                    <button id="btnHeroDead" class="btn btn-default">Dead</button>
+                  </div>
                 </div>
 
+              </div>
+              <div id="propertiesView" class="col-sm-4 col-md-4 col-lg-3 fullheight">
+                <div class="panel panel-default fullheight">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <span class="glyphicon glyphicon-info-sign"></span>
+                      Inspector
+                    </h3>
+                  </div>
+                  <div id="propertiesContent" class="panel-body">
+                    <div>
+                      <div class="input-group input-sm">
+                        <span class="input-group-addon">
+                          <input type="checkbox">
+                        </span>
+                        <input type="text" class="form-control" name="Hero" value="" placeholder="Name...">
+                      </div>
+                      <div class="input-group input-sm">
+                        <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjTag">Tag</label></span>
+                        <select id="selObjTag" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
+                          <optgroup label="builtin">
+                            <option value="0">Untagged</option>
+                            <option value="1">Respawn</option>
+                            <option value="2">Finish</option>
+                            <option value="3">EditorOnly</option>
+                            <option value="4">MainCamera</option>
+                            <option value="5">Player</option>
+                            <option value="6">GameController</option>
+                          </optgroup>
+                          <optgroup label="other">
+                            <option value="-1">Add Tags...</option>
+                          </optgroup>
+                        </select>
+                      </div>
+                      <div class="input-group input-sm">
+                        <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjLayer">Layer</label></span>
+                        <select id="selObjLayer" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
+                          <optgroup label="builtin">
+                            <option value="0">Default</option>
+                            <option value="1">TransparentFX</option>
+                            <option value="2">Ignore Raycast</option>
+                            <option value="3">Water</option>
+                            <option value="4">UI</option>
+                          </optgroup>
+                          <optgroup label="other">
+                            <option value="-1">Add Layer...</option>
+                          </optgroup>
+                        </select>
+                      </div>
+                    </div>
+
+                    <hr>
+
+                    <div id="components" class="panel-group" role="tablist" aria-multiselectable="true">
+                      <div class="panel panel-default">
+                        <div id="transformHeading" class="panel-heading" role="tab">
+                          <h3 class="panel-title">
+                            <a href="#transformCollapse" data-toogle="collapse" data-parent="#components" aria-expanded="true" aria-controls="transformCollapse">
+                              <span class="glyphicon glyphicon-file"></span>
+                              Transform
+                            </a>
+                          </h3>
+                        </div>
+                        <div id="transformCollapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="transformHeading">
+                          <div class="panel-body" style="padding: 4px;">
+                            <table style="border-spacing: 1px;">
+                              <tr>
+                                <td>
+                                  <label>Position</label>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">X</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">Y</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">Z</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <label>Rotation</label>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">X</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">Y</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">Z</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <label>Scale</label>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">X</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">Y</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">
+                                      <label for="#">Z</label>
+                                    </span>
+                                    <input type="text" class="form-control" value="0">
+                                  </div>
+                                </td>
+                              </tr>
+                            </table>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="text-align: center;">
+                    <button id="btnAddComponent" class="btn btn-primary">Add Component</button>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
@@ -394,77 +388,13 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js" charset="UTF-8"><\/script>')</script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap-select.min.js" charset="UTF-8"></script>
+        <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
         <script>window.cc || document.write('<script src="js/vendor/cocos2d-js-v3.1-lite.js" charset="UTF-8"><\/script>')</script>
         <script src="js/plugins.js" charset="UTF-8"></script>
         <script src="js/plexus.js" charset="UTF-8"></script>
+        <script src="js/studio.js" charset="UTF-8"></script>
         <!-- <script src="js/system/AnimatorSystem.js" charset="UTF-8"></script> -->
         <!-- <script src="js/demo.js" charset="UTF-8"></script> -->
         <script src="js/main.js" charset="UTF-8"></script>
-        <script type="text/javascript">
-          (function() {
-              var PlayerInputSystem = PlayerInputSystem || null;
-              if (PlayerInputSystem) {
-                  var inputSystem = new PlayerInputSystem();
-                  plexus.GameSystem.getInstance().addSubSystem(inputSystem);
-              }
-
-              var AnimatorSystem = plexus.CocosAnimatorSystem || null;
-              if (AnimatorSystem) {
-                  var animSys = new AnimatorSystem();
-                  plexus.GameSystem.getInstance().addSubSystem(animSys);
-              }
-          }());
-
-          $(document.body).ready(function() {
-              var testObject = new plexus.GameObject();
-              $(this).bind("GameLoaded", function(event, data) {
-                  testObject.addComponent(new plexus.components.Input());
-                  testObject.addComponent(new plexus.components.Physics());
-                  testObject.addComponent(new plexus.components.Animator());
-                  testObject.setUserData(data.object);
-
-                  plexus.GameSystem.getInstance().addObject(testObject);
-
-                  console.log(testObject.getId());
-              });
-
-              $('#btnHeroIdle').click(function() {
-                  // noop
-                  var comp = testObject.getComponent('animator');
-                  comp && comp.setState('idle');
-              });
-
-              $('#btnHeroRun').click(function() {
-                  // noop
-                  var gs = plexus.GameSystem.getInstance();
-                  var comp = testObject.getComponent('animator');
-                  comp && comp.setState('run');
-              });
-
-              $("#btnHeroHit").click(function() {
-                  // noop
-                  var comp = testObject.getComponent('animator');
-                  comp && comp.setState('hit');
-              });
-
-              $("#btnHeroDead").click(function() {
-                  // noop
-                  var comp = testObject.getComponent('animator');
-                  comp && comp.setState('dead');
-              });
-
-          });
-
-          (function() {
-              $(window).resize(function() {
-                // $(document.body).height($(window).height());
-                  var w = $('#sceneView').width();
-                  var h = $('#sceneView').height();
-                  console.log("width: %f, height: %f", w, h);
-              });
-              $('.selectpicker').selectpicker();
-              // $('.collapse').collapse();
-          }())
-        </script>
     </body>
 </html>

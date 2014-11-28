@@ -19,8 +19,21 @@ textarea {
 }
 
 html {
-    font-size: 1em;
+    /* font-size: 1em; */
     line-height: 1.4;
+    overflow: hidden;
+}
+
+html, body {
+  height: 100%;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.fullheight {
+  height: 100%;
 }
 
 /*
@@ -30,13 +43,17 @@ html {
  */
 
 ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+    /* background: #b3d4fc; */
+  color: #000;
+  background: #fff;
+    /* text-shadow: none; */
 }
 
 ::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+    /* background: #b3d4fc; */
+    /* text-shadow: none; */
+  color: #000;
+  background: #fff;
 }
 
 /*
