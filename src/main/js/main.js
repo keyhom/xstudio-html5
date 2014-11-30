@@ -77,8 +77,8 @@ $(document.body).ready(function() {
             theme: 'minimal-dark'
         });
 
-        $(window).find('#workbench').andSelf().resize(resizeWorkbench);
-        resizeWorkbench();
+        // $(window).find('#workbench').andSelf().resize(resizeWorkbench);
+        // resizeWorkbench();
     });
 }())
 // vi: ft=javascript ts=4 sw=4 et :

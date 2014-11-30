@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en_US">
+  <head>
+    <meta charset="UTF-8">
+    <title>Layout Tests</title>
+    <style type="text/css">
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Airal;
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      #bodyContainer {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+
+      header, footer {
+        height: 50px;
+        background-color: black;
+        color: #fff;
+      }
+
+      #ContentLayer {
+        background-color: #ccc;
+        color: #000;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+        height: calc(100% - 100px);
+      }
+
+      .group {
+        position: relative;
+      }
+
+      .leftGroup {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 250px;
+        background-color: #578230;
+        color: #fff;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+      }
+
+      .rightGroup {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 250px;
+        background-color: #ff6600;
+        color: #fff;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+      }
+
+      #editorArea {
+        background-color: #ccc;
+        color: #000;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+        position: absolute;
+        left: 250px;
+        top: 0;
+        bottom: 0;
+        right: 250px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="bodyContainer">
+      <header>
+        header
+      </header>
+      <div id="ContentLayer" class="group">
+        <div class="leftGroup">
+          left
+        </div>
+        <div id="editorArea">
+          editor area
+        </div>
+        <div class="rightGroup">
+          right
+        </div>
+      </div>
+      <footer>
+        footer
+      </footer>
+    </div>
+  </body>
+</html>

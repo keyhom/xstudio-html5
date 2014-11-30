@@ -21,11 +21,7 @@ textarea {
 html {
     /* font-size: 1em; */
     line-height: 1.4;
-    overflow: hidden;
-}
-
-html, body {
-  height: 100%;
+    /* overflow: hidden; */
 }
 
 .fullwidth {
