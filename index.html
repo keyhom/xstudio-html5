@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/xstudio-theme.css">
   <link rel="stylesheet" href="css/bootstrap3/bootstrap-select.min.css">
   <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
-  <link rel="stylesheet" href="css/jqlayout-default.css">
+  <!-- <link rel="stylesheet" href="css/jqlayout-default.css"> -->
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -106,6 +106,13 @@
         </a>
       </div>
 
+      <div id="btnGroupCtrl" class="btn-group">
+        <button id="btnHeroIdle" class="btn btn-default">Idle</button>
+        <button id="btnHeroRun"  class="btn btn-default">Run</button>
+        <button id="btnHeroHit"  class="btn btn-default">Hit</button>
+        <button id="btnHeroDead" class="btn btn-default">Dead</button>
+      </div>
+
       <div class="btn-group pull-right">
         <select id="selResolution" name="selResolution" class="selectpicker" data-style="btn-default" data-size="100%" data-container="body">
           <option value="0">Default</option>
@@ -131,7 +138,7 @@
 
     <div id="workbench" style="height: calc(100% - 77px);">
 
-        <div id="hierarchyView"> <!-- {{{ -->
+        <div id="hierarchyView" class="ui-layout-west"> <!-- {{{ -->
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Hierarchy</h3>
@@ -190,18 +197,9 @@
             </div>
           </div>
 
-          <div style="margin: 20px auto; text-align: center;">
-            <div id="btnGroupCtrl" class="btn-group">
-              <button id="btnHeroIdle" class="btn btn-default">Idle</button>
-              <button id="btnHeroRun"  class="btn btn-default">Run</button>
-              <button id="btnHeroHit"  class="btn btn-default">Hit</button>
-              <button id="btnHeroDead" class="btn btn-default">Dead</button>
-            </div>
-          </div>
-
         </div> <!-- }}} -->
 
-        <div id="propertiesView"> <!-- {{{ -->
+        <div id="propertiesView" class="ui-layout-east"> <!-- {{{ -->
           <div class="panel panel-default fullheight">
             <div class="panel-heading">
               <h3 class="panel-title">
@@ -379,52 +377,54 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/bootstrap-select.min.js" charset="UTF-8"></script>
   <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
   <script>window.cc || document.write('<script src="js/vendor/cocos2d-js-v3.1-lite.js" charset="UTF-8"><\/script>')</script>
   <script src="js/plugins.js" charset="UTF-8"></script>
   <script src="js/plexus.js" charset="UTF-8"></script>
   <script src="js/studio.js" charset="UTF-8"></script>
   <!-- <script src="js/system/AnimatorSystem.js" charset="UTF-8"></script> -->
   <!-- <script src="js/demo.js" charset="UTF-8"></script> -->
-  <script src="js/main.js" charset="UTF-8"></script>
   <script src="js/studio.js" charset="UTF-8"></script>
+  <script src="js/main.js" charset="UTF-8"></script>
+  <script src="js/test.js" charset="UTF-8"></script>
   <script type="text/javascript">
-    +(function($) {
-      $(document).ready(function( ){
-        $('#workbench').layout({
-          defaults: {
-            fxName: 'none',
-            fxSpeed: 'normal',
-        resizable: false,
-        slidable: false
-          },
-          west: {
-            paneSelector: '#hierarchyView',
-            size: 250,
-        spacing_closed: 21,
-        togglerAlign_closed: "top",
-        togglerAlign_open: 0,
-        togglerTip_open: "Close Weat Pane",
-        togglerTip_closed: "Open West Pane",
-        resizerTip_open: "Reisze West Pane",
-        slideTrigger_open: "click",
-        initClosed: false,
-        fxSettings: {
-          easing: "easeOutBounce"
-        }
-          },
-          east: {
-            paneSelector: '#propertiesView',
-            slidable: true,
-            size: 300
-          },
-          center: {
-            paneSelector: '#editorView',
-        resizable: true,
-        slidable: true
-          }
-        });
-      });
-    }(jQuery));
+//    +(function($) {
+//      $(document).ready(function( ){
+//        $('#workbench').layout({
+//          defaults: {
+//            fxName: 'none',
+//            fxSpeed: 'normal',
+//        resizable: false,
+//        slidable: false
+//          },
+//          west: {
+//            paneSelector: '#hierarchyView',
+//            size: 250,
+//        spacing_closed: 21,
+//        togglerAlign_closed: "top",
+//        togglerAlign_open: 0,
+//        togglerTip_open: "Close Weat Pane",
+//        togglerTip_closed: "Open West Pane",
+//        resizerTip_open: "Reisze West Pane",
+//        slideTrigger_open: "click",
+//        initClosed: false,
+//        fxSettings: {
+//          easing: "easeOutBounce"
+//        }
+//          },
+//          east: {
+//            paneSelector: '#propertiesView',
+//            slidable: true,
+//            size: 300
+//          },
+//          center: {
+//            paneSelector: '#editorView',
+//        resizable: true,
+//        slidable: true
+//          }
+//        });
+//      });
+//    }(jQuery));
   </script>
 </body>
 </html>
