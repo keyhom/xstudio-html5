@@ -74,14 +74,16 @@ module.exports = function(grunt) {
                    '<%= bootstrapCheck %>',
                    footer: '\n}));',
                    process: function(source) {
-                       source = '(function ($) {\n\n' +
+                       source = '+(function ($) {\n\n' +
                        source.replace(/\/\/ -- BEGIN UMD WRAPPER PREFACE --(\n|.)*\/\/ -- END UMD WRAPPER PREFACE --/g, '') ;
                        source = source.replace(/\/\/ -- BEGIN UMD WRAPPER ATERWORD --(\n|.)*\/\/ -- END UMD WRAPPER AFTERWORD --/g, '') + '\n})(jQuery);\n\n';
                        return source;
                    }
                 },
                 src: [
-                    'src/studio/js/hierarchy.js'
+                    'src/studio/js/hierarchy.js',
+                    'src/studio/js/studio-layouts.js',
+                    'src/studio/js/studio-jqlayout.js'
                 ],
                 dest: 'build/js/studio.js'
             }

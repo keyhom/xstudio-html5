@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en_US">
-  <head>
-    <meta charset="UTF-8">
-    <title>Layout Tests</title>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1">
+  <title>Layout Tests</title>
+  <meta name="google" value="notranslate">
+  <meta name="description" content="">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link rel="stylesheet" href="css/xstudio-theme.css">
+  <link rel="stylesheet" href="css/bootstrap3/bootstrap-select.min.css">
+  <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+  <link rel="stylesheet" href="css/main.css">
     <style type="text/css">
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: Airal;
-        font-size: 12px;
-        line-height: 1.8;
-      }
-
-      #bodyContainer {
+      #pageWrapper {
         position: fixed;
         left: 0;
         top: 0;
@@ -23,21 +20,24 @@
         right: 0;
       }
 
-      header, footer {
-        height: 50px;
-        background-color: black;
+      .header, footer {
+        height: 37px;
         color: #fff;
       }
 
-      #ContentLayer {
+      #contentLayer {
         background-color: #ccc;
         color: #000;
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
-        height: calc(100% - 100px);
+        height: calc(100% - 74px);
       }
 
       .group {
         position: relative;
+      }
+
+      .layoutElement {
+        position: absolute;
       }
 
       .leftGroup {
@@ -74,26 +74,71 @@
       }
 
     </style>
-  </head>
-  <body>
-    <div id="bodyContainer">
-      <header>
-        header
-      </header>
-      <div id="ContentLayer" class="group">
-        <div class="leftGroup">
-          left
-        </div>
-        <div id="editorArea">
-          editor area
-        </div>
-        <div class="rightGroup">
-          right
-        </div>
-      </div>
-      <footer>
-        footer
-      </footer>
-    </div>
-  </body>
+</head>
+<body>
+  <div id="pageWrapper">
+    <!-- <div id="rootContainer" data-layout="vertical" style="height: 100%;"> -->
+      <!-- <div class="header layoutElement"> -->
+        <!-- header -->
+      <!-- </div> -->
+      <!-- <div class="toolbar layoutElement"> -->
+        <!-- Toolbar -->
+      <!-- </div> -->
+      <!-- <div class="layoutElement" data-layout="basic" data-height="300" data-width="100%"> -->
+        <!-- <div id="contentLayer" data-layout="horizontal" data-left="5" data-right="5" data-top="5" data-bottom="5" data-height="100%" data-width="100%"> -->
+          <!-- <div class="leftGroup"> -->
+            <!-- left -->
+          <!-- </div> -->
+          <!-- <div id="editorArea"> -->
+            <!-- editor area -->
+          <!-- </div> -->
+          <!-- <div class="rightGroup"> -->
+            <!-- right -->
+          <!-- </div> -->
+        <!-- </div> -->
+      <!-- </div> -->
+      <!-- <footer class="layoutElement"> -->
+        <!-- <div style="text-align:center;width:100%;"> -->
+          <!-- <p style="margin: 0 auto"> -->
+              <!-- Copyright &copy; 2014 Jeremy(keyhom.c@gmail.com) All right reseved. -->
+          <!-- </p> -->
+        <!-- </div> -->
+      <!-- </footer> -->
+    <!-- </div> -->
+    <div class="ui-layout-center">Center</div>
+    <div class="ui-layout-north">North</div>
+    <div class="ui-layout-south">South</div>
+    <div class="ui-layout-west">West</div>
+    <div class="ui-layout-east">East</div>
+  </div>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js" charset="UTF-8"><\/script>')</script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-select.min.js" charset="UTF-8"></script>
+  <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="js/studio.js"></script>
+  <script type="text/javascript">
+    +(function($) {
+
+      var myLayout = $('#pageWrapper').layout({
+        applyDefaultStyles: true,
+        defaults: {
+          fxName: "slide",
+          fxSpeed: "slow",
+          spacing_closed: 14,
+          initClosed: false
+        },
+        north: {
+          fxName: 'none',
+          spacing_closed: 8,
+          togglerLength_closed: "100%",
+          resizable: false
+        },
+        scrollToBookmarkOnLoad: false,
+        showOverflowOnHover: false,
+        spacing_open: 8,
+      });
+
+    }(jQuery));
+  </script>
+</body>
 </html>
