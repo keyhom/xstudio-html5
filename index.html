@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/xstudio-theme.css">
   <link rel="stylesheet" href="css/bootstrap3/bootstrap-select.min.css">
   <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+  <!-- <link rel="stylesheet" href="css/fancytree/skin-themeroller/ui.fancytree.min.css" ref="stylesheet"> -->
   <!-- <link rel="stylesheet" href="css/jqlayout-default.css"> -->
   <link rel="stylesheet" href="css/main.css">
 </head>
@@ -78,7 +79,7 @@
       </div>
     </div>
 
-    <div class="btn-toolbar" role="toolbar" style="padding: 5px;"> 
+    <div class="btn-toolbar" role="toolbar" style="padding: 5px;">
       <div class="btn-group">
         <a class="btn btn-default" href="#">
           <span class="glyphicon glyphicon-asterisk"></span>
@@ -137,67 +138,83 @@
     </div> <!-- }}} -->
 
     <div id="workbench" style="height: calc(100% - 77px);">
-
-        <div id="hierarchyView" class="ui-layout-west"> <!-- {{{ -->
-          <div class="panel panel-default">
+        <div id="hierarchyView" class="ui-layout-west fullheight"> <!-- {{{ -->
+          <div class="panel panel-info" style="height: 50%;">
             <div class="panel-heading">
               <h3 class="panel-title">Hierarchy</h3>
             </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-
-          <div class="panel panel-success">
-            <div class="panel-heading">
-              <h3 class="panel-title">Project</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-
-          <div class="panel panel-warning">
-            <div class="panel-heading">
-              <h3 class="panel-title">Animation</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-
-          <div class="panel panel-danger">
-            <div class="panel-heading">
-              <h3 class="panel-title">Profiler</h3>
-            </div>
-            <div class="panel-body">
-              Panel content
-            </div>
-          </div>
-        </div> <!-- }}} -->
-
-        <div id="editorView" class="ui-layout-center"> <!-- {{{ -->
-          <div class="panel panel-default fullheight">
-            <div class="panel-heading" style="padding: 2px 2px 0 2px;">
-              <!-- <h3 class="panel-title">Editor</h3> -->
-              <ul class="nav nav-tabs" role="tablist" style="margin: 0;">
-                <li class="active" role="presentation"><a role="tab" data-toggle="tab" href="#sceneView">Scene</a></li>
-                <li role="presentation"><a role="tab" data-toggle="tab" href="#gameView">Game</a></li>
-              </ul>
-            </div>
-            <div id="editorViewContent" class="panel-body" style="overflow: hidden;background-color: #inherit;padding: 0;">
-              <div class="tab-content">
-                <div id="sceneView" role="tabpanel" class="tab-pane active">
-                  <canvas id="gameCanvas" width="720" height="480"></canvas>
-                </div>
-                <div id="gameView" role="tabpanel" class="tab-pane">
-                  <p>Noop...</p>
-                </div>
+            <div class="panel-body ui-layout-pane" data-autoheight="1">
+              <div id="hierarchyTree">
+                <ul style="display:none">
+                </ul>
               </div>
             </div>
           </div>
 
+          <div class="panel panel-success" style="height: 50%;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Project</h3>
+            </div>
+            <div class="panel-body" data-autoheight="1">
+              <div id="projectTree">
+                <ul style="display:none">
+                  <li id="id1" title="Look, a tool tip!">Item 1 with key and tooltip.</li>
+                  <li id="id2">Item2</li>
+                  <li id="id3" class="folder">
+                    Folder <em>With some</em> children
+                    <ul>
+                      <li id="id3" class="1">
+                        Sub-item 3.1
+                        <ul>
+                          <li id="id3.1.1">Sub-item 3.1.1</li>
+                          <li id="id3.1.2">Sub-item 3.1.2</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div> <!-- }}} -->
+
+        <div class="ui-layout-center">
+          <div id="editorView" class="fullheight"> <!-- {{{ -->
+            <div class="ui-layout-center">
+              <div class="panel panel-default fullheight">
+                <div class="panel-heading" style="padding: 2px 2px 0 2px;">
+                  <!-- <h3 class="panel-title">Editor</h3> -->
+                  <ul class="nav nav-tabs" role="tablist" style="margin: 0;">
+                    <li class="active" role="presentation"><a role="tab" data-toggle="tab" href="#sceneView">Scene</a></li>
+                    <li role="presentation"><a role="tab" data-toggle="tab" href="#gameView">Game</a></li>
+                  </ul>
+                </div>
+                <div id="editorViewContent" class="panel-body" style="overflow: hidden;background-color: #inherit;padding: 0; height: calc(100% - 30px);">
+                  <div class="tab-content fullheight">
+                    <div id="sceneView" role="tabpanel" class="tab-pane fade in active fullheight">
+                      <div class="fullheight fullwidth">
+                        <canvas id="gameCanvas" width="720" height="480"></canvas>
+                      </div>
+                    </div>
+                    <div id="gameView" role="tabpanel" class="tab-pane fade fullheight">
+                      <!-- <iframe src="http://192.168.0.77/JustLoader.html?openid=j1" style="width: 1366px; height: 768px;" frameborder="0" width="1366" height="768"></iframe> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-layout-south">
+              <div class="panel panel-warning fullheight">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Animation</h3>
+                </div>
+                <div class="panel-body">
+                  Animator ----&gt;
+                </div>
+              </div>
+            </div>
+          </div> <!-- }}} -->
+        </div>
 
         <div id="propertiesView" class="ui-layout-east"> <!-- {{{ -->
           <div class="panel panel-default fullheight">
@@ -207,7 +224,7 @@
                 Inspector
               </h3>
             </div>
-            <div id="propertiesContent" class="panel-body">
+            <div id="propertiesContent" data-autoheight="1" class="panel-body">
               <div>
                 <div class="input-group input-sm">
                   <span class="input-group-addon">
@@ -355,17 +372,22 @@
                     </div>
                   </div>
                 </div>
+
+                <div style="text-align: center; margin-top: 10px;">
+                  <button id="btnAddComponent" class="btn btn-primary">Add Component</button>
+                </div>
               </div>
             </div>
 
-            <div style="text-align: center;">
-              <button id="btnAddComponent" class="btn btn-primary">Add Component</button>
-            </div>
           </div>
         </div> <!-- }}} -->
 
-      <div class="ui-layout-south well" style="text-align: center;">
-        Copyright &copy; Jeremy All right reseved.
+      <div class="ui-layout-south" style="text-align: center; padding: 5px;">
+        <div class="panel panel-default fullwidth" style="margin: 0;">
+          <div class="panel-body">
+            Copyright &copy; XStudio All right reseved.
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -378,53 +400,16 @@
   <script src="js/bootstrap-select.min.js" charset="UTF-8"></script>
   <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
   <script src="js/jquery-ui.min.js"></script>
+  <script src="js/fancytree/jquery.fancytree.min.js" charset="UTF-8"></script>
   <script>window.cc || document.write('<script src="js/vendor/cocos2d-js-v3.1-lite.js" charset="UTF-8"><\/script>')</script>
   <script src="js/plugins.js" charset="UTF-8"></script>
   <script src="js/plexus.js" charset="UTF-8"></script>
-  <script src="js/studio.js" charset="UTF-8"></script>
   <!-- <script src="js/system/AnimatorSystem.js" charset="UTF-8"></script> -->
-  <!-- <script src="js/demo.js" charset="UTF-8"></script> -->
   <script src="js/studio.js" charset="UTF-8"></script>
   <script src="js/main.js" charset="UTF-8"></script>
   <script src="js/test.js" charset="UTF-8"></script>
-  <script type="text/javascript">
-//    +(function($) {
-//      $(document).ready(function( ){
-//        $('#workbench').layout({
-//          defaults: {
-//            fxName: 'none',
-//            fxSpeed: 'normal',
-//        resizable: false,
-//        slidable: false
-//          },
-//          west: {
-//            paneSelector: '#hierarchyView',
-//            size: 250,
-//        spacing_closed: 21,
-//        togglerAlign_closed: "top",
-//        togglerAlign_open: 0,
-//        togglerTip_open: "Close Weat Pane",
-//        togglerTip_closed: "Open West Pane",
-//        resizerTip_open: "Reisze West Pane",
-//        slideTrigger_open: "click",
-//        initClosed: false,
-//        fxSettings: {
-//          easing: "easeOutBounce"
-//        }
-//          },
-//          east: {
-//            paneSelector: '#propertiesView',
-//            slidable: true,
-//            size: 300
-//          },
-//          center: {
-//            paneSelector: '#editorView',
-//        resizable: true,
-//        slidable: true
-//          }
-//        });
-//      });
-//    }(jQuery));
-  </script>
+  <script src="js/demo.js" charset="UTF-8"></script>
 </body>
 </html>
+<!-- vi:ft=html ts=2 sw=2 et foldmethod=marker foldmarker={{{,}}}
+-->

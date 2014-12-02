@@ -69,16 +69,24 @@ $(document.body).ready(function() {
             }
         }
     }
+
     $('.selectpicker').selectpicker();
     $(document).ready(function() {
-        $('#editorViewContent, #components').mCustomScrollbar({
-            axis: 'y',
+        $('#hierarchyView .panel-body[data-autoheight], #gameView').mCustomScrollbar({
+            axis: 'yx',
             scrollInertia: 0,
-            theme: 'minimal-dark'
+            // theme: 'inset-3-dark',
+            // theme: 'inset',
+            theme: '3d',
+            advanced: {
+                autoExpandHorizontalScroll: true
+            }
         });
 
-        // $(window).find('#workbench').andSelf().resize(resizeWorkbench);
-        // resizeWorkbench();
+        $('#propertiesContent').mCustomScrollbar({
+            scrollInertia: 0,
+            theme: '3d'
+        });
     });
 }())
 // vi: ft=javascript ts=4 sw=4 et :

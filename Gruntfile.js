@@ -83,7 +83,8 @@ module.exports = function(grunt) {
                 src: [
                     'src/studio/js/hierarchy.js',
                     'src/studio/js/studio-layouts.js',
-                    'src/studio/js/studio-jqlayout.js'
+                    'src/studio/js/studio-jqlayout.js',
+                    'src/studio/js/studio-autoheight.js'
                 ],
                 dest: 'build/js/studio.js'
             }
@@ -220,7 +221,7 @@ module.exports = function(grunt) {
                     sourceMapURL: '<%= pkg.name %>-theme.css.map',
                     sourceMapFilename: 'build/css/<%= pkg.name %>-theme.css.map'
                 },
-                src: ['src/main/less/variables.less', 'src/main/less/bootswatch.less'],
+                src: ['src/main/less/variables.less', 'src/main/less/bootswatch.less', 'src/main/less/fancytree.less'],
                 dest: 'build/css/<%= pkg.name %>-theme.css'
             }
         },

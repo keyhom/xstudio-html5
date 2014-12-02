@@ -75,42 +75,95 @@
         return null;
     };
 
+    var SceneViewContainerStg = cc.ContainerStrategy.extend({
+        preApply: function(view) {
+
+        },
+        apply: function(view, designedResolution) {
+            this._setupContainer(view, view.getFrameSize().width, view.getFrameSize().height);
+        },
+        postApply: function(view) {
+
+        }
+    });
+
+    var SceneViewContentStg = cc.ContentStrategy.extend({
+        preApply: function(view) {
+        },
+        apply: function(view, designedResolution) {
+            // var containerW = cc.canvas.width, containerH = cc.canvas.height;
+            var containerW = view.getFrameSize().width, containerH = view.getFrameSize().height;
+            // var contentW = designedResolution.width, contentH = designedResolution.height;
+            var contentW = containerW, contentH = containerH;
+            var scaleX = 1, scaleY = 1;
+            return this._buildResult(containerW, containerH, contentW, contentH, scaleX, scaleY);
+            // return this._buildResult(720, 480, 720, 480, scaleX, scaleY);
+        },
+        postApply: function(view) {
+        }
+    });
+
     cc.loader.resPath = './res';
-    cc.game.onStart = function() {
-        // load resources
-        cc._loaderImage = cc.loader.resPath + "/level_1/loading_bg.jpg";
-        cc.LoaderScene.preload([
-            "HelloWorld.png",
-            "level_1/background.jpg",
-            "level_1/loading_bg.jpg",
-            "level_1/huayao.png",
-            "level_1/huayao.plist",
-            "level_1/animations.plist"
-        ], function(err) {
-            // assert(!err);
 
-            var t1 = cc.textureCache.getTextureForKey("level_1/huayao.png");
-            if (t1) {
-                cc.spriteFrameCache.addSpriteFrames("level_1/huayao.plist", t1);
+    $(window).on('load', function() {
+        var __gameRunning = false;
+        cc.game.onStart = function() {
+            // load resources
+            cc._loaderImage = cc.loader.resPath + "/level_1/loading_bg.jpg";
+            cc.LoaderScene.preload([
+                "HelloWorld.png",
+                "level_1/background.jpg",
+                "level_1/loading_bg.jpg",
+                "level_1/huayao.png",
+                "level_1/huayao.plist",
+                "level_1/animations.plist"
+            ], function(err) {
+                // assert(!err);
+
+                var t1 = cc.textureCache.getTextureForKey("level_1/huayao.png");
+                if (t1) {
+                    cc.spriteFrameCache.addSpriteFrames("level_1/huayao.plist", t1);
+                }
+
+                cc.animationCache.addAnimations("level_1/animations.plist");
+                // cc.director._openGLView.setDesignResolutionSize(720, 480, 2);
+                // var policy = new cc.ResolutionPolicy(cc.ContainerStrategy.PROPORTION_TO_FRAME, cc.ContentStrategy.EXACT_FIT);
+                var policy = new cc.ResolutionPolicy(new SceneViewContainerStg(), new SceneViewContentStg());
+                cc.view.setDesignResolutionSize(720, 480, policy);
+                cc.view.resizeWithBrowserSize(true);
+
+                cc.director.setDisplayStats(true);
+                cc.director.runScene(GameScene.createScene());
+                cc.director.getScheduler().scheduleUpdateForTarget(plexus.GameSystem.getInstance(), cc.Scheduler.PRIORITY_SYSTEM, false);
+
+                __gameRunning = true;
+
+            }, this);
+        };
+
+        var gameParent = $('#gameCanvas').parent();
+
+        // Make the canvas fit the browser window's size.
+        // $('#gameCanvas')
+            // .attr('width', $(document.body).width())
+            // .attr('height', $(document).height()).show();
+
+
+        // Run game.
+        cc.game.run("gameCanvas");
+        setInterval(function() {
+            if (__gameRunning) {
+                var gameView = $('#sceneView');
+                var fs = cc.view.getFrameSize();
+                if (fs) {
+                    if (fs.width != gameView.width() || fs.height != gameView.height()) {
+                        cc.view.setFrameSize(gameView.width(), gameView.height());
+                        cc.view.setDesignResolutionSize(gameView.width(), gameView.height());
+                    }
+                }
             }
-
-            cc.animationCache.addAnimations("level_1/animations.plist");
-            // cc.director._openGLView.setDesignResolutionSize(720, 480, 2);
-            cc.director.setDisplayStats(true);
-            cc.director.runScene(GameScene.createScene());
-            cc.director.getScheduler().scheduleUpdateForTarget(plexus.GameSystem.getInstance(), cc.Scheduler.PRIORITY_SYSTEM, false);
-            // cc.director.scheduleUpdateForTarget(plexus.GameSystem.getInstance(), 0, false);
-
-        }, this);
-    };
-
-    // Make the canvas fit the browser window's size.
-    // $('#gameCanvas')
-        // .attr('width', $(document.body).width())
-        // .attr('height', $(document).height()).show();
-
-    // Run game.
-    cc.game.run("gameCanvas");
+        }, 1000);
+    });
 
 })();
 
