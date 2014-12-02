@@ -157,22 +157,6 @@
             </div>
             <div class="panel-body" data-autoheight="1">
               <div id="projectTree">
-                <ul style="display:none">
-                  <li id="id1" title="Look, a tool tip!">Item 1 with key and tooltip.</li>
-                  <li id="id2">Item2</li>
-                  <li id="id3" class="folder">
-                    Folder <em>With some</em> children
-                    <ul>
-                      <li id="id3" class="1">
-                        Sub-item 3.1
-                        <ul>
-                          <li id="id3.1.1">Sub-item 3.1.1</li>
-                          <li id="id3.1.2">Sub-item 3.1.2</li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -240,29 +224,36 @@
                       <option value="1">Respawn</option>
                       <option value="2">Finish</option>
                       <option value="3">EditorOnly</option>
-                      <option value="4">MainCamera</option>
+                      <!-- <option value="4">MainCamera</option> -->
                       <option value="5">Player</option>
                       <option value="6">GameController</option>
                     </optgroup>
                     <optgroup label="other">
-                      <option value="-1">Add Tags...</option>
                     </optgroup>
                   </select>
+                  <button class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
                 </div>
                 <div class="input-group input-sm">
                   <span class="input-group-addon" style="min-width: 75px;"><label for="#selObjLayer">Layer</label></span>
                   <select id="selObjLayer" class="selectpicker form-control" data-style="btn-default" data-size="100%" data-container="body">
                     <optgroup label="builtin">
-                      <option value="0">Default</option>
-                      <option value="1">TransparentFX</option>
+                      <option value="0">Objects</option>
+                      <!-- <option value="1">TransparentFX</option> -->
+                      <!-- <option value="2">Ignore Raycast</option> -->
+                      <!-- <option value="3">Water</option> -->
+                      <option value="3">EffectFX</option>
                       <option value="2">Ignore Raycast</option>
-                      <option value="3">Water</option>
+                      <option value="1">Terrain</option>
                       <option value="4">UI</option>
                     </optgroup>
                     <optgroup label="other">
-                      <option value="-1">Add Layer...</option>
                     </optgroup>
                   </select>
+                  <button class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
                 </div>
               </div>
 

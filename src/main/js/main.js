@@ -2,7 +2,7 @@
 
 console.log("Main.js [loaded]");
 
-(function() {
++(function() {
     var PlayerInputSystem = PlayerInputSystem || null;
     if (PlayerInputSystem) {
         var inputSystem = new PlayerInputSystem();
@@ -56,22 +56,66 @@ $(document.body).ready(function() {
 
 });
 
-(function() {
-    function resizeWorkbench() {
-        var workbench = $('#workbench');
-        var workbenchContent = workbench.find('#workbenchContent');
-
-        if (workbench && workbenchContent) {
-            var h = workbench.height();
-            var offset = workbenchContent.offset().top - workbench.offset().top;
-            if (h) {
-                workbenchContent.height(h - offset);
-            }
-        }
-    }
-
++(function($) {
     $('.selectpicker').selectpicker();
+
     $(document).ready(function() {
+      // Main layout settings.
+      var mainLayoutSettings = {
+        default: {
+          fxName: 'slide',
+          fxSpeed: 'normal',
+          fxSettings: {
+            easing: "easeOutBounce"
+          }
+        },
+        east: {
+          minSize: 300,
+          size: 350,
+        },
+        west: {
+          minSize: 200,
+          size: 250,
+        },
+        south: {
+          closable: false,
+          resizable: false,
+          spacing_open: 0
+        }
+      };
+
+      $('#workbench').layout(mainLayoutSettings);
+      $('#editorView').layout({
+        default:{
+        },
+        south: {
+          size: 200,
+          minSize: 150
+        }
+      });
+
+      // Project Tree settings.
+      $('#projectTree').fancytree({
+        source: {
+          url: "data/project.json",
+          complete: function() {
+
+          }
+        }
+      });
+      $('#hierarchyTree').fancytree({
+        source: {
+          url: "data/hierarchy.json",
+          complete: function() {
+
+          }
+        },
+      });
+
+    });
+
+
+    $(window).on('load', function() {
         $('#hierarchyView .panel-body[data-autoheight], #gameView').mCustomScrollbar({
             axis: 'yx',
             scrollInertia: 0,
@@ -88,6 +132,4 @@ $(document.body).ready(function() {
             theme: '3d'
         });
     });
-}())
-// vi: ft=javascript ts=4 sw=4 et :
-
+}(jQuery));

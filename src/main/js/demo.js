@@ -36,20 +36,20 @@
 
             _bg.runAction(cc.Follow.create(hero, cc.rect(0, 0, _bg.getContentSize().width, _bg.getContentSize().height)));
 
-            // var l = cc.EventListener.create({
-                // event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                // swallowTouches: true,
-                // onTouchBegan: function(touch, event) {
-                    // // do something.
-                    // var loc = touch.getLocation();
-                    // loc = _bg.convertToNodeSpace(loc);
-                    // hero.runAction(cc.MoveTo.create(1, loc));
+            var l = cc.EventListener.create({
+                event: cc.EventListener.TOUCH_ONE_BY_ONE,
+                swallowTouches: true,
+                onTouchBegan: function(touch, event) {
+                    // do something.
+                    var loc = touch.getLocation();
+                    loc = _bg.convertToNodeSpace(loc);
+                    hero.runAction(cc.MoveTo.create(1, loc));
 
-                    // return true;
-                // }
-            // });
+                    return true;
+                }
+            });
 
-            // cc.eventManager.addListener(l, this);
+            cc.eventManager.addListener(l, this);
 
             this._hero = hero;
 
@@ -129,7 +129,7 @@
                 // cc.director._openGLView.setDesignResolutionSize(720, 480, 2);
                 // var policy = new cc.ResolutionPolicy(cc.ContainerStrategy.PROPORTION_TO_FRAME, cc.ContentStrategy.EXACT_FIT);
                 var policy = new cc.ResolutionPolicy(new SceneViewContainerStg(), new SceneViewContentStg());
-                cc.view.setDesignResolutionSize(720, 480, policy);
+                cc.view.setDesignResolutionSize(gameView.width(), gameView.height(), policy);
                 cc.view.resizeWithBrowserSize(true);
 
                 cc.director.setDisplayStats(true);
@@ -142,18 +142,18 @@
         };
 
         var gameParent = $('#gameCanvas').parent();
+        var gameView = $('#sceneView');
 
         // Make the canvas fit the browser window's size.
-        // $('#gameCanvas')
-            // .attr('width', $(document.body).width())
-            // .attr('height', $(document).height()).show();
+        $('#gameCanvas')
+            .attr('width', gameView.width())
+            .attr('height', gameView.height()).show();
 
 
         // Run game.
         cc.game.run("gameCanvas");
         setInterval(function() {
             if (__gameRunning) {
-                var gameView = $('#sceneView');
                 var fs = cc.view.getFrameSize();
                 if (fs) {
                     if (fs.width != gameView.width() || fs.height != gameView.height()) {
@@ -162,7 +162,7 @@
                     }
                 }
             }
-        }, 1000);
+        }, 500);
     });
 
 })();
